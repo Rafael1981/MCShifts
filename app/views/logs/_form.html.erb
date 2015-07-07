@@ -1,0 +1,64 @@
+<%= form_for(@log) do |f| %>
+  <% if @log.errors.any? %>
+    <div id="error_explanation">
+      <h2><%= pluralize(@log.errors.count, "error") %> prohibited this log from being saved:</h2>
+
+      <ul>
+      <% @log.errors.full_messages.each do |message| %>
+        <li><%= message %></li>
+      <% end %>
+      </ul>
+    </div>
+  <% end %>
+
+  
+    <div class="row">
+        <div class='col-sm-3'>
+            <div class="form-group">
+              <%= f.label :Signin %><br>
+                <div class='input-group date' id='datetimepicker1'>                    
+                    <%= f.text_field :Signin, 'data-behaviour' => 'datetimepicker', class: "form-control", :value=> Time.parse(f.object.Signin.to_s).strftime('%Y/%m/%d %H:%M') %>
+                    <span class="input-group-addon">
+                        <span class="glyphicon glyphicon-calendar"></span>
+                    </span>
+                </div>
+            </div>
+        </div>
+        <script type="text/javascript">
+            $(function () {
+                $('#datetimepicker1').datetimepicker({
+                format: 'YYYY/MM/DD hh:mm'
+                });
+            });
+        </script>
+    </div>
+
+
+
+
+  
+    <div class="row">
+        <div class='col-sm-3'>
+            <div class="form-group">
+              <%= f.label :Signout %><br>
+                <div class='input-group date' id='datetimepicker2'>                    
+                    <%= f.text_field :Signout, 'data-behaviour' => 'datetimepicker', class: "form-control", :value=> Time.parse(f.object.Signout.to_s).strftime('%Y/%m/%d %H:%M') %>
+                    <span class="input-group-addon">
+                        <span class="glyphicon glyphicon-calendar"></span>
+                    </span>
+                </div>
+            </div>
+        </div>
+        <script type="text/javascript">
+            $(function () {
+                $('#datetimepicker2').datetimepicker({
+                format: 'YYYY/MM/DD hh:mm'
+                });
+            });
+        </script>
+    </div>
+
+  <div class="actions">
+    <%= f.submit class: "btn btn-primary"%>
+  </div>
+<% end %>

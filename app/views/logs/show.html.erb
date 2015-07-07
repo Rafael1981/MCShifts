@@ -1,0 +1,14 @@
+<p id="notice"><%= notice %></p>
+
+<p>
+  <strong>Signin:</strong>
+  <%= Time.parse(@log.Signin.to_s).strftime('%Y/%m/%d %H:%M') %>
+</p>
+
+<p>
+  <strong>Signout:</strong>
+  <%= Time.parse(@log.Signout.to_s).strftime('%Y/%m/%d %H:%M') %>
+</p>
+
+<%= link_to 'Edit', edit_log_path(@log), class: "btn btn-link mclink" %> |
+<%= link_to 'Back', logs_path, class: "btn btn-link mclink" %>
