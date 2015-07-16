@@ -46,6 +46,7 @@ gem 'sprockets-rails', '>= 2.1.4'
 gem 'momentjs-rails', '>= 2.8.1'
 gem 'bootstrap3-datetimepicker-rails', '~> 4.7.14'
 
+gem 'devise'
 
 group  :production do
 	gem 'pg'
