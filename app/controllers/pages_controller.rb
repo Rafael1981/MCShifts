@@ -4,4 +4,8 @@ class PagesController < ApplicationController
 
   def contact
   end
+
+  def usersindex
+  	@users = User.all
+  end
 end
