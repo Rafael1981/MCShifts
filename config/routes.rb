@@ -1,10 +1,20 @@
 Rails.application.routes.draw do
 
   resources :logs
-
+  resources :users
+  resource :user_sessions, only: [:new, :create, :destroy]
+  
   get 'pages/about'
 
   get 'pages/contact'
+
+  get 'signup' => 'users#new'
+  
+  get 'login' => 'user_sessions#new'
+
+  post 'login' => 'user_sessions#create'
+
+  delete 'logout' => 'user_sessions#destroy'
 
   root 'logs#index'
 
