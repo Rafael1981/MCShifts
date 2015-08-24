@@ -3,13 +3,11 @@ class LogsController < ApplicationController
   before_action :require_user
 
   # GET /logs
-  # GET /logs.json
   def index
     @logs = Log.all
   end
 
   # GET /logs/1
-  # GET /logs/1.json
   def show
   end
 

@@ -18,6 +18,7 @@ Rails.application.routes.draw do
 
   root 'logs#index'
 
+  get 'users' => 'user#index'
 
 
 
