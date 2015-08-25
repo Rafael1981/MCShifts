@@ -7,7 +7,7 @@
       <th>Middle Name</th>
       <th>Last Name</th>
       <th>Email</th>
-      <th colspan="2"></th>
+      <th colspan="3"></th>
     </tr>
   </thead>
 
@@ -19,7 +19,8 @@
         <td><%= user.lastname%></td>
         <td><%= user.email %></td>
         <td><%= link_to 'Show', user, class: "btn btn-link mclink" %></td>
-        <td><%= link_to 'Edit', edit_log_path(user), class: "btn btn-link mclink" %></td>
+        <td><%= link_to 'Edit', edit_user_path(user), class: "btn btn-link mclink" %></td>
+        <td><%= link_to 'New Password', password_path(user), class: "btn btn-link mclink" %></td>
         
       </tr>
     <% end %>

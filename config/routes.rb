@@ -18,7 +18,8 @@ Rails.application.routes.draw do
 
   root 'logs#index'
 
-  get 'users' => 'user#index'
+  get 'users/user_password/:id', to: 'users#password', as: 'password'
+ # get '/patients/:id', to: 'patients#show', as: 'patient'
 
 
 

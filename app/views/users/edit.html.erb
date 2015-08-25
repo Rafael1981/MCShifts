@@ -1,4 +1,4 @@
-<h1>Create User</h1>
+<h1>Editing User</h1>
 
 <%= form_for(@user) do |f| %>
   <% if @user.errors.any? %>
@@ -32,9 +32,12 @@
         <%= f.password_field :password, :placeholder => "Password", class: "form-control" %>
       </div>
       <div class="form-group">
-        <%= f.submit "Create account", class: "btn btn-danger" %>
+        <%= f.submit "Save changes", class: "btn btn-danger" %>
       </div>
     </div>
   </div>
 <% end %>
 
+
+<%= link_to 'Show', @user,  class: "btn btn-link mclink"%> |
+<%= link_to 'Back', users_path, class: "btn btn-link mclink"%>
