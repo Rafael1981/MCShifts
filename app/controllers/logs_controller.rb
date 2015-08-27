@@ -4,7 +4,7 @@ class LogsController < ApplicationController
 
   # GET /logs
   def index
-    @logs = Log.all
+    @logs = Log.where(user: current_user).order("created_at DESC")
   end
 
   # GET /logs/1
@@ -27,11 +27,13 @@ class LogsController < ApplicationController
   # POST /logs.json
   def create
     @log = Log.new(log_params)
+    @log.user_id = current_user.id
 
     respond_to do |format|
       if @log.save
         format.html { redirect_to @log, notice: 'Log was successfully created.' }
-        format.json { render :show, status: :created, location: @log }
+        format.json { render :show, status: :created, location: @log }        
+        UserMailer.log_email(@log, '1', current_user).deliver
       else
         format.html { render :new }
         format.json { render json: @log.errors, status: :unprocessable_entity }
@@ -45,7 +47,9 @@ class LogsController < ApplicationController
     respond_to do |format|
       if @log.update(log_params)
         format.html { redirect_to @log, notice: 'Log was successfully updated.' }
-        format.json { render :show, status: :ok, location: @log }
+        format.json { render :show, status: :ok, location: @log }     
+        UserMailer.log_email(@log, '2', current_user).deliver
+
       else
         format.html { render :edit }
         format.json { render json: @log.errors, status: :unprocessable_entity }

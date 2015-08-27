@@ -24,7 +24,9 @@ class UsersController < ApplicationController
 	def create
 		@user = User.new(user_params)
 		if @user.save
-			redirect_to '/'
+      # Tell the UserMailer to send a welcome email after save
+      UserMailer.welcome_email(@user).deliver
+			redirect_to '/users'
 		else
 			redirect_to '/signup'
 		end

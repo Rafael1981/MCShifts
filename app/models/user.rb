@@ -10,4 +10,5 @@ class User < ActiveRecord::Base
   def admin?
   	self.role == 'admin'
   end
+  has_many :logs
 end

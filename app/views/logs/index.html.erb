@@ -12,8 +12,8 @@
   <tbody>
     <% @logs.each do |log| %>
       <tr>
-        <td><%= Time.parse(log.Signin.to_s).strftime('%Y/%m/%d %H:%M')%></td>
-        <td><%= Time.parse(log.Signout.to_s).strftime('%Y/%m/%d %H:%M') %></td>
+        <td><%= Time.parse(log.Signin.to_s).strftime('%d/%m/%Y %H:%M')%></td>
+        <td><%= Time.parse(log.Signout.to_s).strftime('%d/%m/%Y %H:%M') %></td>
         <td><%= link_to 'Show', log, class: "btn btn-link mclink" %></td>
         <td><%= link_to 'Edit', edit_log_path(log), class: "btn btn-link mclink" %></td>
         <td><%= link_to 'Destroy', log, method: :delete, data: { confirm: 'Are you sure?' }, class: "btn btn-link mclink" %></td>

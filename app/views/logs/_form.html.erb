@@ -18,7 +18,7 @@
             <div class="form-group">
               <%= f.label :Signin %><br>
                 <div class='input-group date' id='datetimepicker1'>                    
-                    <%= f.text_field :Signin, 'data-behaviour' => 'datetimepicker', class: "form-control", :value=> Time.parse(f.object.Signin.to_s).strftime('%Y/%m/%d %H:%M') %>
+                    <%= f.text_field :Signin, 'data-behaviour' => 'datetimepicker', class: "form-control", :value=> Time.parse(f.object.Signin.to_s).strftime('%d/%m/%Y %H:%M') %>
                     <span class="input-group-addon">
                         <span class="glyphicon glyphicon-calendar"></span>
                     </span>
@@ -28,7 +28,7 @@
         <script type="text/javascript">
             $(function () {
                 $('#datetimepicker1').datetimepicker({
-                format: 'YYYY/MM/DD hh:mm'
+                format: 'DD/MM/YYYY HH:mm'
                 });
             });
         </script>
@@ -43,7 +43,7 @@
             <div class="form-group">
               <%= f.label :Signout %><br>
                 <div class='input-group date' id='datetimepicker2'>                    
-                    <%= f.text_field :Signout, 'data-behaviour' => 'datetimepicker', class: "form-control", :value=> Time.parse(f.object.Signout.to_s).strftime('%Y/%m/%d %H:%M') %>
+                    <%= f.text_field :Signout, 'data-behaviour' => 'datetimepicker', class: "form-control", :value=> Time.parse(f.object.Signout.to_s).strftime('%d/%m/%Y %H:%M') %>
                     <span class="input-group-addon">
                         <span class="glyphicon glyphicon-calendar"></span>
                     </span>
@@ -53,7 +53,7 @@
         <script type="text/javascript">
             $(function () {
                 $('#datetimepicker2').datetimepicker({
-                format: 'YYYY/MM/DD hh:mm'
+                format: 'DD/MM/YYYY HH:mm'
                 });
             });
         </script>

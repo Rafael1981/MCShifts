@@ -1,0 +1,11 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta content='text/html; charset=UTF-8' http-equiv='Content-Type' />
+  </head>
+  <body>
+</p>
+    <h1>Hello,<%= @user.firstname %> <% if @action == '1' %>Signed In at <%= Time.parse(@log.Signin.to_s).strftime('%d/%m/%Y %H:%M') %> . <% else %>Signed out at <%= Time.parse(@log.Signout.to_s).strftime('%d/%m/%Y %H:%M') %>.
+      <% end %></h1>
+  </body>
+</html>

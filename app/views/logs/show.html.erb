@@ -2,12 +2,12 @@
 
 <p>
   <strong>Signin:</strong>
-  <%= Time.parse(@log.Signin.to_s).strftime('%Y/%m/%d %H:%M') %>
+  <%= Time.parse(@log.Signin.to_s).strftime('%d/%m/%Y %H:%M') %>
 </p>
 
 <p>
   <strong>Signout:</strong>
-  <%= Time.parse(@log.Signout.to_s).strftime('%Y/%m/%d %H:%M') %>
+  <%= Time.parse(@log.Signout.to_s).strftime('%d/%m/%Y %H:%M') %>
 </p>
 
 <%= link_to 'Edit', edit_log_path(@log), class: "btn btn-link mclink" %> |
