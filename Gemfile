@@ -47,6 +47,8 @@ gem 'momentjs-rails', '>= 2.8.1'
 gem 'bootstrap3-datetimepicker-rails', '~> 4.7.14'
 
 gem 'bcrypt'
+#Adding figaro to protect sensitive data
+gem 'figaro'
 
 group  :production do
 	gem 'pg'
