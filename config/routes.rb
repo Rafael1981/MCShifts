@@ -21,6 +21,9 @@ Rails.application.routes.draw do
   get 'users/user_password/:id', to: 'users#password', as: 'password'
  # get '/patients/:id', to: 'patients#show', as: 'patient'
 
+  get 'reports' => 'reports#select'
+
+  post 'reports' => 'reports#generate'
 
 
   # The priority is based upon order of creation: first created -> highest priority.
