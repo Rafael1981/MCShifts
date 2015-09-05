@@ -1,0 +1,52 @@
+<h1>Editing log</h1>
+<%= form_tag("generate", method: "get") do %>
+
+  <div class="row">
+    <div class='col-sm-3'>
+      <div class="form-group">
+        <div class='input-group date' id='mindate'>
+          <%= text_field_tag 'mindate',(Time.now - 14.days).strftime('%d/%m/%Y %H:%M'), class: "form-control"%>
+          <span class="input-group-addon">
+            <span class="glyphicon glyphicon-calendar"></span>
+          </span>
+        </div>
+      </div>
+    </div>
+  </div>
+  <div class="row">
+    <div class='col-sm-3'>
+      <div class="form-group">
+        <div class='input-group date' id='maxdate'>
+          <%= text_field_tag 'maxdate',Time.now.strftime('%d/%m/%Y %H:%M'), class: "form-control"%>
+          <span class="input-group-addon">
+            <span class="glyphicon glyphicon-calendar"></span>
+          </span>
+        </div>
+      </div>
+    </div>
+  </div>
+  <script type="text/javascript">
+    $(function () {
+      $('#mindate').datetimepicker({
+        format: 'DD/MM/YYYY HH:mm'
+      }); 
+      $('#maxdate').datetimepicker({
+        useCurrent: false ,//Important! See issue #1075
+        format: 'DD/MM/YYYY HH:mm'    
+      });
+      $("#mindate").on("dp.change", function (e) {
+        $('#maxdate').data("DateTimePicker").minDate(e.date);
+      });
+      $("#maxdate").on("dp.change", function (e) {
+        $('#mindate').data("DateTimePicker").maxDate(e.date);
+      });
+    });
+  </script>
+
+  <div class="actions">
+    <%= submit_tag("Generate Report", class: "btn btn-primary btn-danger")%>
+  </div>
+<% end %>
+
+
+<%= link_to 'Back', logs_path, class: "btn btn-link mclink" %>
