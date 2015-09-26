@@ -5,6 +5,7 @@ class ReportsController < ApplicationController
 	end
 
 	def generate
+		
 	end
 
 end

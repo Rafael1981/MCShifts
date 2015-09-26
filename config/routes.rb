@@ -25,6 +25,7 @@ Rails.application.routes.draw do
   get 'reports' => 'reports#select'
 
   post 'reports' => 'reports#generate'
+  #post 'reports', to: 'reports#generate', as: 'reports'
 
 
   # The priority is based upon order of creation: first created -> highest priority.
