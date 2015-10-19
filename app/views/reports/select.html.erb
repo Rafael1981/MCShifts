@@ -1,8 +1,21 @@
-<h1>Generate Report</h1>
+<h3>Generate Report</h3>
 <%= form_tag("reports", method: "post") do %>
 
+<% if current_user.admin? %>
   <div class="row">
-    <div class='col-sm-3'>
+    <div class='col-md-3'>
+      <div class="form-group">
+        <div class='input-group' id='user'>
+          <%= select("post", "person_id", User.all.collect {|p| [ p.firstname+" "+p.lastname, p.id ] }, { include_blank: "All"}, class: "form-control")%>
+        </div>
+      </div>
+    </div>
+  </div>
+<% end %>
+
+
+  <div class="row">
+    <div class='col-md-3'>
       <div class="form-group">
         <div class='input-group date' id='mindate'>
           <%= text_field_tag 'mindate',(Time.now - 14.days).strftime('%d/%m/%Y %H:%M'), class: "form-control"%>
@@ -12,9 +25,9 @@
         </div>
       </div>
     </div>
-  </div>
+  </div>  
   <div class="row">
-    <div class='col-sm-3'>
+    <div class='col-md-3'>
       <div class="form-group">
         <div class='input-group date' id='maxdate'>
           <%= text_field_tag 'maxdate',Time.now.strftime('%d/%m/%Y %H:%M'), class: "form-control"%>

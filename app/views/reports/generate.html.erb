@@ -1,0 +1,48 @@
+<h3>Worked Hours</h3>
+  <p>From: <%= Time.parse(@mindate.to_s).strftime('%d/%m/%Y %H:%M')%><p/>
+  <p>To: <%= Time.parse(@maxdate.to_s).strftime('%d/%m/%Y %H:%M')%><p/>
+  <p>Employee: <%= current_user.firstname+" "+current_user.lastname %>  <p/>
+
+
+<div class="table-responsive">
+    <table class="table table-bordered table-striped">
+      <thead>
+        <tr>
+          <th>
+            Sign In
+          </th>
+          <th>
+            Sign Out
+          </th>
+          <th>
+            Daily Total
+          </th>
+      </thead>
+      <tbody>
+
+      <% total = 0 %>
+        <% @logs.each do |log| %>
+          <% wrktime = 0 %>
+          <tr>
+            <td class="col-md-2"><%= Time.parse(log.Signin.to_s).strftime('%d/%m/%Y %H:%M')  %>/<%= log.Signin.to_i%></td>
+            <td class="col-md-2"><%= Time.parse(log.Signout.to_s).strftime('%d/%m/%Y %H:%M') %>/<%= log.Signout.to_i%></td>
+
+            <%  wrktime = log.Signout.to_i - log.Signin.to_i
+                mm, ss = wrktime.divmod(60)            
+                hh, mm = mm.divmod(60)%>
+            <td class="col-md-2"><%=  hh.to_s.rjust(2, '0') %>:<%= mm.to_s.rjust(2, '0') %></td>
+          </tr>
+          <% total = total + wrktime %>
+        <% end %>
+        <% mm, ss = total.divmod(60)            
+           hh, mm = mm.divmod(60)%>
+        <tr>
+          <td colspan="2" align="right">Total</td>
+          <td><%= hh.to_s.rjust(2, '0') %>:<%= mm.to_s.rjust(2, '0') %></td>
+        </tr>
+      </tbody>
+    </table>
+  </div>
+<br>
+
+<%= link_to 'New Report', reports_path, class: "btn btn-link mclink" %>
