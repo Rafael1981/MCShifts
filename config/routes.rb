@@ -1,5 +1,7 @@
 Rails.application.routes.draw do
 
+  resources :places
+
   resources :logs
   resources :users
   resource :user_sessions, only: [:new, :create, :destroy]
@@ -25,6 +27,7 @@ Rails.application.routes.draw do
   get 'reports' => 'reports#select'
 
   post 'reports' => 'reports#generate'
+
   #post 'reports', to: 'reports#generate', as: 'reports'
 
 

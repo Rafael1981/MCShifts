@@ -1,7 +1,7 @@
 <h3>Worked Hours</h3>
   <p>From: <%= Time.parse(@mindate.to_s).strftime('%d/%m/%Y %H:%M')%><p/>
   <p>To: <%= Time.parse(@maxdate.to_s).strftime('%d/%m/%Y %H:%M')%><p/>
-  <p>Employee: <%= current_user.firstname+" "+current_user.lastname %>  <p/>
+  <p>Employee: <% if @userselected.present? %> <%= current_user.firstname+" "+current_user.lastname %><% else %>All Employees <% end %><p/>
 
 
 <div class="table-responsive">
@@ -24,8 +24,8 @@
         <% @logs.each do |log| %>
           <% wrktime = 0 %>
           <tr>
-            <td class="col-md-2"><%= Time.parse(log.Signin.to_s).strftime('%d/%m/%Y %H:%M')  %>/<%= log.Signin.to_i%></td>
-            <td class="col-md-2"><%= Time.parse(log.Signout.to_s).strftime('%d/%m/%Y %H:%M') %>/<%= log.Signout.to_i%></td>
+            <td class="col-md-2"><%= Time.parse(log.Signin.to_s).strftime('%d/%m/%Y %H:%M') %></td>
+            <td class="col-md-2"><%= Time.parse(log.Signout.to_s).strftime('%d/%m/%Y %H:%M') %></td>
 
             <%  wrktime = log.Signout.to_i - log.Signin.to_i
                 mm, ss = wrktime.divmod(60)            

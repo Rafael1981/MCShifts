@@ -14,11 +14,13 @@ class ReportsController < ApplicationController
 		@maxdate = params[:maxdate]			
 		@userselected = params[:post][:person_id]
 		if current_user.admin?
-			@logs = Log.where(user: @userselected).order("Signin DESC")
+			if @userselected.present?
+				@logs = Log.where(user: @userselected).where("Signin  BETWEEN :start_date AND :end_date",  {start_date: Time.parse(@mindate), end_date: Time.parse(@maxdate)}).order("Signin DESC")
+			else
+				@logs = Log.where("Signin  BETWEEN :start_date AND :end_date",  {start_date: Time.parse(@mindate), end_date: Time.parse(@maxdate)}).order("Signin DESC")
+			end
 		else
 			@logs = Log.where(user: current_user).order("Signin DESC")
-		end
-		
+		end		
 	end
-
 end
