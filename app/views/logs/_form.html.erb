@@ -12,6 +12,17 @@
     </div>
   <% end %>
 
+  <div class="row">
+    <div class='col-md-3'>
+      <div class="form-group">
+        <%= f.label :Place %><br>
+        <div class='input-group' id='place'>
+          <%= select("post", "place_id", Place.all.collect {|p| [ p.name, p.id ] }, {}, class: "form-control")%>
+        </div>
+      </div>
+    </div>
+  </div>
+
   
     <div class="row">
         <div class='col-sm-3'>

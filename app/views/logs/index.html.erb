@@ -17,6 +17,9 @@
           Sign Out
         </th>
         <th>
+          Place
+        </th>
+        <th>
           <% if current_user.admin? %>Total <% else %> Update <% end %>
         </th>
     </thead>
@@ -29,6 +32,7 @@
           <% end %>
           <td class="col-md-1"><%= Time.parse(log.Signin.to_s).strftime('%d/%m/%Y %H:%M') %></td>
           <td class="col-md-1"><%= Time.parse(log.Signout.to_s).strftime('%d/%m/%Y %H:%M') %></td>
+          <td class="col-md-1"><%= log.place.name %></td>
 
           <%  wrktime = log.Signout.to_i - log.Signin.to_i
               mm, ss = wrktime.divmod(60)            
@@ -39,5 +43,8 @@
     </tbody>
   </table>
 </div>
-
+<% if current_user.admin? %>
+<%= link_to 'Check Hours', reports_path, class: "btn btn-link mclink" %>
+<% else %>
 <%= link_to 'New Log', new_log_path, class: "btn btn-link mclink" %>
+<% end %>

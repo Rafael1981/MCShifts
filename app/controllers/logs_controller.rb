@@ -17,6 +17,7 @@ class LogsController < ApplicationController
     @log.Signin = DateTime.now
     #todo: definir um valor vazio para signout quando o registro é criado
     @log.Signout = DateTime.now 
+    @places = Place.all
   end
 
   # GET /logs/1/edit
@@ -28,6 +29,7 @@ class LogsController < ApplicationController
   def create
     @log = Log.new(log_params)
     @log.user_id = current_user.id
+    @log.place_id = params[:post][:place_id]
 
     respond_to do |format|
       if @log.save

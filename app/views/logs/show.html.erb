@@ -1,6 +1,11 @@
 <p id="notice"><%= notice %></p>
 
 <p>
+  <strong>Place:</strong>
+  <%= @log.place.name %>
+</p>
+
+<p>
   <strong>Signin:</strong>
   <%= Time.parse(@log.Signin.to_s).strftime('%d/%m/%Y %H:%M') %>
 </p>

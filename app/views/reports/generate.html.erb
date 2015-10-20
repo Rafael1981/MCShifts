@@ -20,7 +20,10 @@
             Sign Out
           </th>
           <th>
-            Total hours for the shift
+            Place
+          </th>
+          <th>
+            Total hours per shift
           </th>
       </thead>
       <tbody>
@@ -34,6 +37,7 @@
             <% end %>
             <td class="col-md-2"><%= Time.parse(log.Signin.to_s).strftime('%d/%m/%Y %H:%M') %></td>
             <td class="col-md-2"><%= Time.parse(log.Signout.to_s).strftime('%d/%m/%Y %H:%M') %></td>
+            <td class="col-md-2"><%= log.place.name %></td>
 
             <%  wrktime = log.Signout.to_i - log.Signin.to_i
                 mm, ss = wrktime.divmod(60)            
@@ -45,7 +49,7 @@
         <% mm, ss = total.divmod(60)            
            hh, mm = mm.divmod(60)%>
         <tr>
-          <td colspan=<% if current_user.admin? %>"3"<%else%>"2"<%end%> align="right">Total hours for period:</td>
+          <th colspan=<% if current_user.admin? %>"4"<%else%>"3"<%end%> align="right">Total hours for the period:</th>
           <td><%= hh.to_s.rjust(2, '0') %>:<%= mm.to_s.rjust(2, '0') %></td>
         </tr>
       </tbody>

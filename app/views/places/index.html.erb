@@ -1,23 +1,27 @@
 <h3>Places</h3>
 
-<table>
-  <thead>
-    <tr>
-      <th>Name</th>
-      <th></th>
-    </tr>
-  </thead>
-
-  <tbody>
-    <% @places.each do |place| %>
+<div class="table-responsive">
+  <table class="table table-bordered table-striped">
+    <thead>
       <tr>
-        <td><%= place.name  %></td>
-        <td><%= link_to 'Edit', edit_place_path(place), class: "btn btn-link mclink" %></td>
-      </tr>
-    <% end %>
-  </tbody>
-</table>
-
-<br>
+        <th class="col-md-1">
+          <div align="center">Name</div>
+        </th>
+        <th class="col-md-1">
+          <div align="center">Actions</div>
+        </th>
+    </thead>
+    <tbody>
+      <% @places.each do |place| %>
+        <tr>
+          <% if current_user.admin? %>
+            <td class="col-md-1"><%= place.name %></td>
+            <td class="col-md-1"><%= link_to 'Edit', edit_place_path(place), class: "btn btn-link mclink" %></td>
+          <% end %>
+        </tr>
+      <% end %>
+    </tbody>
+  </table>
+</div>
 
 <%= link_to 'New Place', new_place_path, class: "btn btn-link mclink" %>
