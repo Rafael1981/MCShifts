@@ -4,10 +4,15 @@
   <p>Employee: <% if @userselected.present? %> <%= current_user.firstname+" "+current_user.lastname %><% else %>All Employees <% end %><p/>
 
 
-<div class="table-responsive">
+  <div class="table-responsive">
     <table class="table table-bordered table-striped">
       <thead>
         <tr>
+          <% if current_user.admin? %>
+            <th>
+              Employee
+            </th>
+          <% end %>
           <th>
             Sign In
           </th>
@@ -15,7 +20,7 @@
             Sign Out
           </th>
           <th>
-            Daily Total
+            Total hours for the shift
           </th>
       </thead>
       <tbody>
@@ -24,6 +29,9 @@
         <% @logs.each do |log| %>
           <% wrktime = 0 %>
           <tr>
+            <% if current_user.admin? %>
+              <td class="col-md-2"><%= log.user.firstname+" "+log.user.lastname %></td>
+            <% end %>
             <td class="col-md-2"><%= Time.parse(log.Signin.to_s).strftime('%d/%m/%Y %H:%M') %></td>
             <td class="col-md-2"><%= Time.parse(log.Signout.to_s).strftime('%d/%m/%Y %H:%M') %></td>
 
@@ -37,12 +45,11 @@
         <% mm, ss = total.divmod(60)            
            hh, mm = mm.divmod(60)%>
         <tr>
-          <td colspan="2" align="right">Total</td>
+          <td colspan=<% if current_user.admin? %>"3"<%else%>"2"<%end%> align="right">Total hours for period:</td>
           <td><%= hh.to_s.rjust(2, '0') %>:<%= mm.to_s.rjust(2, '0') %></td>
         </tr>
       </tbody>
     </table>
   </div>
-<br>
 
 <%= link_to 'New Report', reports_path, class: "btn btn-link mclink" %>

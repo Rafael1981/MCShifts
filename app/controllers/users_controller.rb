@@ -1,6 +1,6 @@
 class UsersController < ApplicationController
 	before_action :require_admin, only: [:new, :create, :edit, :update, :index, :show]
-
+  before_action :require_user
   # GET /users
   def index
     @users = User.all

@@ -4,7 +4,7 @@ class LogsController < ApplicationController
 
   # GET /logs
   def index
-    @logs = Log.where(user: current_user).order("created_at DESC")
+    @logs = Log.where(user: current_user).limit(7).order("created_at DESC")
   end
 
   # GET /logs/1

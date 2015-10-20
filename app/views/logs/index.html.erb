@@ -1,27 +1,43 @@
-<h1>Listing logs</h1>
+<h3>Logs</h3>
 
-<table>
-  <thead>
-    <tr>
-      <th>Sign In</th>
-      <th>Sign Out</th>
-      <th colspan="3"></th>
-    </tr>
-  </thead>
 
-  <tbody>
-    <% @logs.each do |log| %>
+<div class="table-responsive">
+  <table class="table table-bordered table-striped">
+    <thead>
       <tr>
-        <td><%= Time.parse(log.Signin.to_s).strftime('%d/%m/%Y %H:%M')%></td>
-        <td><%= Time.parse(log.Signout.to_s).strftime('%d/%m/%Y %H:%M') %></td>
-        <td><%= link_to 'Show', log, class: "btn btn-link mclink" %></td>
-        <td><%= link_to 'Edit', edit_log_path(log), class: "btn btn-link mclink" %></td>
-        <td><%= link_to 'Destroy', log, method: :delete, data: { confirm: 'Are you sure?' }, class: "btn btn-link mclink" %></td>
-      </tr>
-    <% end %>
-  </tbody>
-</table>
+        <% if current_user.admin? %>
+          <th>
+            Employee
+          </th>
+        <% end %>
+        <th>
+          Sign In
+        </th>
+        <th>
+          Sign Out
+        </th>
+        <th>
+          <% if current_user.admin? %>Total <% else %> Update <% end %>
+        </th>
+    </thead>
+    <tbody>
+      <% @logs.each do |log| %>
+        <% wrktime = 0 %>
+        <tr>
+          <% if current_user.admin? %>
+            <td class="col-md-1"><%= log.user.firstname+" "+log.user.lastname %></td>
+          <% end %>
+          <td class="col-md-1"><%= Time.parse(log.Signin.to_s).strftime('%d/%m/%Y %H:%M') %></td>
+          <td class="col-md-1"><%= Time.parse(log.Signout.to_s).strftime('%d/%m/%Y %H:%M') %></td>
 
-<br>
+          <%  wrktime = log.Signout.to_i - log.Signin.to_i
+              mm, ss = wrktime.divmod(60)            
+              hh, mm = mm.divmod(60)%>
+          <td class="col-md-1"><% if current_user.admin? %><%=  hh.to_s.rjust(2, '0') %>:<%= mm.to_s.rjust(2, '0') %><% else %> <%= link_to 'Edit', edit_log_path(log), class: "btn btn-link mclink" %> <% end %></td>
+        </tr>
+      <% end %>
+    </tbody>
+  </table>
+</div>
 
 <%= link_to 'New Log', new_log_path, class: "btn btn-link mclink" %>

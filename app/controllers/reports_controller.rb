@@ -1,5 +1,5 @@
 class ReportsController < ApplicationController
-
+	before_action :require_user
 	def select
 		if current_user.admin?
 			@users = User.all.order("Firstname ASC")
@@ -12,8 +12,8 @@ class ReportsController < ApplicationController
 
 		@mindate = params[:mindate]
 		@maxdate = params[:maxdate]			
-		@userselected = params[:post][:person_id]
 		if current_user.admin?
+			@userselected = params[:post][:person_id]
 			if @userselected.present?
 				@logs = Log.where(user: @userselected).where("Signin  BETWEEN :start_date AND :end_date",  {start_date: Time.parse(@mindate), end_date: Time.parse(@maxdate)}).order("Signin DESC")
 			else
