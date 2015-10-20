@@ -1,32 +1,39 @@
-<h1>Listing logs</h1>
+<h3>Users</h3>
 
-<table>
-  <thead>
-    <tr>
-      <th>First Name</th>
-      <th>Middle Name</th>
-      <th>Last Name</th>
-      <th>Email</th>
-      <th colspan="3"></th>
-    </tr>
-  </thead>
-
-  <tbody>
-    <% @users.each do |user| %>
+<div class="table-responsive">
+  <table class="table table-bordered table-striped">
+    <thead>
       <tr>
-        <td><%= user.firstname%></td>
-        <td><%= user.middlename %></td>
-        <td><%= user.lastname%></td>
-        <td><%= user.email %></td>
-        <td><%= link_to 'Show', user, class: "btn btn-link mclink" %></td>
-        <td><%= link_to 'Edit', edit_user_path(user), class: "btn btn-link mclink" %></td>
-        <td><%= link_to 'New Password', password_path(user), class: "btn btn-link mclink" %></td>
-        
-      </tr>
-    <% end %>
-  </tbody>
-</table>
-
-<br>
+        <th class="col-md-1">
+          <div align="center">First Name</div>
+        </th class="col-md-1">
+        <th>
+          <div align="center">Middle Name</div>
+        </th>
+        <th class="col-md-1">
+          <div align="center">Last Name</div>
+        </th>
+        <th class="col-md-1">
+          <div align="center">Email</div>
+        </th>
+        <th class="col-md-2">
+          <div align="center">Actions </div>
+        </th>
+    </thead>
+    <tbody>
+      <% @users.each do |user| %>
+        <tr>
+          <% if current_user.admin? %>
+            <td class="col-md-1"><%= user.firstname%></td>
+            <td class="col-md-1"><%= user.middlename %></td>
+            <td class="col-md-1"><%= user.lastname%></td>
+            <td class="col-md-1"><%= user.email %></td>
+            <td class="col-md-2"><%= link_to 'Edit', edit_user_path(user), class: "btn btn-link mclink" %> <%= link_to 'New Password', password_path(user), class: "btn btn-link mclink" %></td>
+          <% end %>
+        </tr>
+      <% end %>
+    </tbody>
+  </table>
+</div>
 
 <%= link_to 'New User', signup_path, class: "btn btn-link mclink" %>
