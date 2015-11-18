@@ -5,10 +5,22 @@ class LogsController < ApplicationController
   # GET /logs
   def index
     unless current_user.admin?
-      @logs = Log.where(user: current_user).limit(7).order("created_at DESC")
+      cnt = Log.where(user: current_user).count
+      if cnt >= 7
+        @logs = Log.where(user: current_user).limit(7).order("created_at DESC")
+      else
+        @logs = Log.where(user: current_user).order("created_at DESC")
+      end
     else
-      @logs = Log.where("user_id>0").limit(7).order("created_at DESC")
+      cnt = Log.where("user_id>0").count
+      if cnt >= 7
+        @logs = Log.where("user_id>0").limit(7).order("created_at DESC")
+      else
+        @logs = Log.where("user_id>0").order("created_at DESC")
+      end  
     end
+
+
   end
 
   # GET /logs/1
@@ -16,11 +28,11 @@ class LogsController < ApplicationController
   end
 
   # GET /logs/new
+  #todo: find a better solution for the timezone distortion in the browser
   def new
     @log = Log.new
-    @log.Signin = DateTime.now
-    #todo: definir um valor vazio para signout quando o registro é criado
-    @log.Signout = DateTime.now 
+    @log.Signin = DateTime.now.change(:offset => "+0000")
+    @log.Signout = DateTime.now.change(:offset => "+0000")
     @places = Place.all
   end
 

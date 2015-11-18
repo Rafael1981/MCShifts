@@ -43,8 +43,8 @@ gem 'bootstrap-sass', '~> 3.3.5.1'
 gem 'sprockets-rails', '>= 2.1.4'
 
 #Adding bootstratp datetime picker
-gem 'momentjs-rails', '>= 2.8.1'
-gem 'bootstrap3-datetimepicker-rails', '~> 4.7.14'
+gem 'momentjs-rails', '>= 2.10.6'
+gem 'bootstrap3-datetimepicker-rails', '~> 4.17.37'
 
 gem 'bcrypt'
 #Adding figaro to protect sensitive data
