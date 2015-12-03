@@ -18,11 +18,15 @@ Rails.application.routes.draw do
 
   delete 'logout' => 'user_sessions#destroy'
 
-  root 'logs#index'
+  root 'logs#root'
 
   get 'users/user_password/:id', to: 'users#password', as: 'password'
  # get '/patients/:id', to: 'patients#show', as: 'patient'
 
+
+  get 'signin' => 'logs#signin'
+
+  get 'signout' => 'logs#signout'
 
   get 'reports' => 'reports#select'
 

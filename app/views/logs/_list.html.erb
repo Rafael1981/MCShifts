@@ -1,0 +1,42 @@
+<div class="table-responsive">
+  <table class="table table-bordered table-striped">
+    <thead>
+      <tr>
+        <% if current_user.admin? %>
+          <th>
+            Employee
+          </th>
+        <% end %>
+        <th>
+          Sign In
+        </th>
+        <th>
+          Sign Out
+        </th>
+        <th>
+          Place
+        </th>
+        <th>
+          <% if current_user.admin? %>Total <% else %> Update <% end %>
+        </th>
+    </thead>
+    <tbody>
+      <% @logs.each do |log| %>
+        <% wrktime = 0 %>
+        <tr>
+          <% if current_user.admin? %>
+            <td class="col-md-1"><%= log.user.firstname+" "+log.user.lastname %></td>
+          <% end %>
+          <td class="col-md-1"><%= Time.parse(log.Signin.to_s).strftime('%d/%m/%Y %H:%M') %></td>
+          <td class="col-md-1"><%= Time.parse(log.Signout.to_s).strftime('%d/%m/%Y %H:%M') %></td>
+          <td class="col-md-1"><%= log.place.name %></td>
+
+          <%  wrktime = log.Signout.to_i - log.Signin.to_i
+              mm, ss = wrktime.divmod(60)            
+              hh, mm = mm.divmod(60)%>
+          <td class="col-md-1"><% if current_user.admin? %><%=  hh.to_s.rjust(2, '0') %>:<%= mm.to_s.rjust(2, '0') %><% else %> <%= link_to 'Edit', edit_log_path(log), class: "btn btn-link mclink" %> <% end %></td>
+        </tr>
+      <% end %>
+    </tbody>
+  </table>
+</div>

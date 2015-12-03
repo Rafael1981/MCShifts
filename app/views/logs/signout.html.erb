@@ -1,0 +1,20 @@
+<h3> Sign Out </h3> 
+
+  <div class="row">
+    <div class='col-md-3'>
+      <div class="form-group">
+        <%= label_tag :title, :Place %><br>
+        <div class='input-group' id='place'>
+          <%= select("post", "place_id", Place.all.collect {|p| [ p.name, p.id ] }, {}, class: "form-control")%>
+        </div>
+      </div>
+    </div>
+  </div>
+
+
+        <%= label_tag :time, :Time %><br>
+<div id="time" class="form-group"></div>
+
+  <script type="text/javascript">
+   startTime();
+   </script>

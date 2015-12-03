@@ -7,9 +7,9 @@ class LogsController < ApplicationController
     unless current_user.admin?
       cnt = Log.where(user: current_user).count
       if cnt >= 7
-        @logs = Log.where(user: current_user).limit(7).order("created_at DESC")
+       @logs = Log.where(user: current_user).limit(7).order("created_at DESC")
       else
-        @logs = Log.where(user: current_user).order("created_at DESC")
+       @logs = Log.where(user: current_user).order("created_at DESC")
       end
     else
       cnt = Log.where("user_id>0").count
@@ -22,6 +22,32 @@ class LogsController < ApplicationController
 
 
   end
+
+
+  # GET /root
+
+  def root
+    if current_user.admin?
+      redirect_to 'logs'
+    else
+      cnt = Log.where(user: current_user).where("created_at = updated_at").count
+      if cnt == 0
+        redirect_to '/signin'
+      else
+        redirect_to '/signout'
+      end
+    end
+  end
+
+  # GET /signin
+  def signin
+  end
+
+
+  # GET /signout
+  def signout
+  end
+
 
   # GET /logs/1
   def show
