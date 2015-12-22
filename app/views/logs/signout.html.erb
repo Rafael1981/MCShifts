@@ -1,20 +1,40 @@
-<h3> Sign Out </h3> 
+<h3> Sign Out </h3>
+<%= form_tag(controller: "logs", action: "create_signout", method: "post") %>
 
-  <div class="row">
-    <div class='col-md-3'>
-      <div class="form-group">
-        <%= label_tag :title, :Place %><br>
-        <div class='input-group' id='place'>
-          <%= select("post", "place_id", Place.all.collect {|p| [ p.name, p.id ] }, {}, class: "form-control")%>
-        </div>
+
+<% if @log.errors.any? %>
+    <div id="error_explanation" class="alert alert-danger alert-dismissable">
+      <button type="button" class="close" data-dismiss="alert" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+      <h4><%= pluralize(@log.errors.count, "error") %> prohibited this log from being saved:</h4>
+
+      <ul>
+        <% @log.errors.full_messages.each do |message| %>
+            <li><%= message %></li>
+        <% end %>
+      </ul>
+    </div>
+<% end %>
+<div class="row">
+  <div class='col-md-3'>
+    <div class="form-group">
+      <%= label_tag :title, :Place %><br>
+      <div class='input-group' id='place'>
+        <%= @log.place.name %>
       </div>
     </div>
   </div>
+</div>
 
 
-        <%= label_tag :time, :Time %><br>
+<%= hidden_field_tag "Signin",  Time.parse(@log.Signin.to_s).strftime('%d/%m/%Y %H:%M')  %>
+<%= hidden_field_tag "id",  @log.id  %>
+
+<%= label_tag :"Time to be recorded" %><br>
+<%= hidden_field_tag "log[Signout]" %>
 <div id="time" class="form-group"></div>
 
-  <script type="text/javascript">
-   startTime();
-   </script>
+<%= submit_tag("Sign Out" , class: "btn btn-primary btn-danger") %>
+
+<script type="text/javascript">
+  startTime();
+</script>

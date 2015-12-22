@@ -1,5 +1,20 @@
 <h3> Sign In </h3> 
 
+<%= form_tag(controller: "logs", action: "create_signin", method: "post") %>
+
+
+<% if @log.errors.any? %>
+    <div id="error_explanation" class="alert alert-danger alert-dismissable">
+      <button type="button" class="close" data-dismiss="alert" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+      <h4><%= pluralize(@log.errors.count, "error") %> prohibited this log from being saved:</h4>
+
+      <ul>
+        <% @log.errors.full_messages.each do |message| %>
+            <li><%= message %></li>
+        <% end %>
+      </ul>
+    </div>
+<% end %>
   <div class="row">
     <div class='col-md-3'>
       <div class="form-group">
@@ -12,8 +27,11 @@
   </div>
 
 
-        <%= label_tag :time, :Time %><br>
+        <%= label_tag :Signin%><br>
+        <%= hidden_field_tag "log[Signin]" %>
 <div id="time" class="form-group"></div>
+
+<%= submit_tag("Sign In" , class: "btn btn-primary btn-danger") %>
 
   <script type="text/javascript">
    startTime();

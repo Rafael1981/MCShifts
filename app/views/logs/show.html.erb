@@ -9,11 +9,12 @@
   <strong>Signin:</strong>
   <%= Time.parse(@log.Signin.to_s).strftime('%d/%m/%Y %H:%M') %>
 </p>
-
+<% if @log.Signout != @log.Signin %>
 <p>
   <strong>Signout:</strong>
   <%= Time.parse(@log.Signout.to_s).strftime('%d/%m/%Y %H:%M') %>
 </p>
+<% end %>
 
 <%= link_to 'Edit', edit_log_path(@log), class: "btn btn-link mclink" %> |
 <%= link_to 'Back', logs_path, class: "btn btn-link mclink" %>

@@ -30,7 +30,7 @@ class LogsController < ApplicationController
     if current_user.admin?
       redirect_to 'logs'
     else
-      cnt = Log.where(user: current_user).where("created_at = updated_at").count
+      cnt = Log.where(user: current_user).where("signin = signout").count
       if cnt == 0
         redirect_to '/signin'
       else
@@ -41,13 +41,53 @@ class LogsController < ApplicationController
 
   # GET /signin
   def signin
+    @log = Log.new
+    @places = Place.all
   end
 
 
   # GET /signout
   def signout
+    @log = Log.where(user: current_user).where("signin = signout").order("id DESC").first
   end
 
+###########################3
+  # POST /signin
+  def create_signin
+    @log = Log.new(log_params)
+    @log.Signout = @log.Signin
+    @log.user_id = current_user.id
+    @log.place_id = params[:post][:place_id]
+
+    respond_to do |format|
+      if @log.save
+        format.html { redirect_to @log, notice: 'Sign In Successfull.' }
+        format.json { render :show, status: :created, location: @log }
+        UserMailer.log_email(@log, '1', current_user).deliver
+      else
+        format.html { render :signin }
+        format.json { render json: @log.errors, status: :unprocessable_entity }
+      end
+    end
+  end
+################################
+
+  # POST /signout
+  def create_signout
+    @log = set_log
+    respond_to do |format|
+      if @log.update(log_params)
+        format.html { redirect_to @log, notice: 'Sign Out successfull.' }
+        format.json { render :show, status: :ok, location: @log }
+        UserMailer.log_email(@log, '2', current_user).deliver
+
+      else
+        format.html { render :edit }
+        format.json { render json: @log.errors, status: :unprocessable_entity }
+      end
+    end
+  end
+############################
 
   # GET /logs/1
   def show
@@ -75,7 +115,7 @@ class LogsController < ApplicationController
 
     respond_to do |format|
       if @log.save
-        format.html { redirect_to @log, notice: 'Log was successfully created.' }
+        format.html { redirect_to @log, notice: 'Record was successfully created.' }
         format.json { render :show, status: :created, location: @log }        
         UserMailer.log_email(@log, '1', current_user).deliver
       else
@@ -90,7 +130,7 @@ class LogsController < ApplicationController
   def update
     respond_to do |format|
       if @log.update(log_params)
-        format.html { redirect_to @log, notice: 'Log was successfully updated.' }
+        format.html { redirect_to @log, notice: 'Record was successfully updated.' }
         format.json { render :show, status: :ok, location: @log }     
         UserMailer.log_email(@log, '2', current_user).deliver
 

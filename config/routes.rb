@@ -28,6 +28,10 @@ Rails.application.routes.draw do
 
   get 'signout' => 'logs#signout'
 
+  post 'create_signin' => 'logs#create_signin'
+
+  post 'create_signout' => 'logs#create_signout'
+
   get 'reports' => 'reports#select'
 
   post 'reports' => 'reports#generate'
