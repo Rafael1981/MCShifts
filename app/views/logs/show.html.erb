@@ -4,12 +4,12 @@
 </p>
 
 <p>
-  <strong>Signin:</strong>
+  <strong>Signed In at:</strong>
   <%= Time.parse(@log.Signin.to_s).strftime('%d/%m/%Y %H:%M') %>
 </p>
 <% if @log.Signout != @log.Signin %>
 <p>
-  <strong>Signout:</strong>
+  <strong>Signed Out at:</strong>
   <%= Time.parse(@log.Signout.to_s).strftime('%d/%m/%Y %H:%M') %>
 </p>
 <% end %>

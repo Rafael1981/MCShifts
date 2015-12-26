@@ -26,10 +26,14 @@
 </div>
 
 
+<%= label_tag "Signed in at:" %><br>
+<%= Time.parse(@log.Signin.to_s).strftime('%d/%m/%Y %H:%M')  %><br><br>
+
+
 <%= hidden_field_tag "Signin",  Time.parse(@log.Signin.to_s).strftime('%d/%m/%Y %H:%M')  %>
 <%= hidden_field_tag "id",  @log.id  %>
 
-<%= label_tag :"Time to be recorded" %><br>
+<%= label_tag "Time to out be recorded:" %><br>
 <%= hidden_field_tag "log[Signout]" %>
 <div id="time" class="form-group"></div>
 

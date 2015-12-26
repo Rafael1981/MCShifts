@@ -27,7 +27,7 @@
     <div class="row">
         <div class='col-sm-3'>
             <div class="form-group">
-              <%= f.label :Signin %><br>
+              <%= label_tag "Signed In at:" %><br>
                 <div class='input-group date' id='datetimepicker1'>                    
                     <%= f.text_field :Signin, 'data-behaviour' => 'datetimepicker', class: "form-control", :value=> Time.parse(f.object.Signin.to_s).strftime('%d/%m/%Y %H:%M') %>
                     <span class="input-group-addon">
@@ -45,7 +45,7 @@
     <div class="row">
         <div class='col-sm-3'>
             <div class="form-group">
-              <%= f.label :Signout %><br>
+              <%= label_tag "Signed Out at:" %><br>
                 <div class='input-group date' id='datetimepicker2'>                    
                     <%= f.text_field :Signout, 'data-behaviour' => 'datetimepicker', class: "form-control", :value=> Time.parse(f.object.Signout.to_s).strftime('%d/%m/%Y %H:%M %z') %>
                     <span class="input-group-addon">
@@ -86,6 +86,6 @@
     </div>
 
   <div class="actions">
-    <%= f.submit class: "btn btn-primary btn-danger"%>
+    <%= f.submit 'Update', class: "btn btn-primary btn-danger"%>
   </div>
 <% end %>
