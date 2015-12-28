@@ -5,20 +5,26 @@ class LogsController < ApplicationController
   # GET /logs
   def index
     unless current_user.admin?
-      cnt = Log.where(user: current_user).count
-      if cnt >= 7
-       @logs = Log.where(user: current_user).limit(7).order("created_at DESC")
-      else
-       @logs = Log.where(user: current_user).order("created_at DESC")
-      end
+      # cnt = Log.where(user: current_user).count
+      # if cnt >= 7
+      #  @logs = Log.where(user: current_user).limit(7).order("created_at DESC")
+      # else
+      #  @logs = Log.where(user: current_user).order("created_at DESC")
+      # end
+      @logs = Log.where(user: current_user).paginate(:page => params[:page], :per_page => 5).order("created_at DESC")
     else
       cnt = Log.where("user_id>0").count
       if cnt >= 7
         @logs = Log.where("user_id>0").limit(7).order("created_at DESC")
       else
         @logs = Log.where("user_id>0").order("created_at DESC")
-      end  
+      end
+
     end
+
+    #############.paginate(:page => params[:page], :per_page => 10)
+
+    ############
 
 
   end
@@ -28,7 +34,7 @@ class LogsController < ApplicationController
 
   def root
     if current_user.admin?
-      redirect_to 'logs'
+      redirect_to '/logs'
     else
       cnt = Log.where(user: current_user).where("signin = signout").count
       if cnt == 0
