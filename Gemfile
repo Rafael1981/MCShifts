@@ -50,6 +50,10 @@ gem 'bcrypt'
 #Adding figaro to protect sensitive data
 gem 'figaro'
 
+
+#pagination gem will_paginate
+gem 'will_paginate', '~> 3.0.6'
+
 group  :production do
 	gem 'pg'
 	gem 'rails_12factor'
