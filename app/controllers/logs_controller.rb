@@ -110,6 +110,10 @@ class LogsController < ApplicationController
 
   # GET /logs/1/edit
   def edit
+    @log = set_log
+    unless (@log.Signin != @log.Signout)
+      redirect_to '/logs'
+    end
   end
 
   # POST /logs

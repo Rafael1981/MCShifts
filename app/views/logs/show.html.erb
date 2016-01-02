@@ -1,17 +1,39 @@
-<p>
-  <strong>Place:</strong>
-  <%= @log.place.name %>
-</p>
+<h3>Period Recorded</h3>
 
-<p>
-  <strong>Signed In at:</strong>
-  <%= Time.parse(@log.Signin.to_s).strftime('%d/%m/%Y %H:%M') %>
-</p>
+
+<div class="row">
+  <div class='col-md-3'>
+    <div class="form-group">
+      <%= label_tag :Place %><br>
+      <div class='input-group' id='place'>
+        <%= @log.place.name %>
+      </div>
+    </div>
+  </div>
+</div>
+
+<div class="row">
+  <div class='col-md-3'>
+    <div class="form-group">
+      <%= label_tag 'Signed In at'%><br>
+      <div class='input-group' id='place'>
+        <%= Time.parse(@log.Signin.to_s).strftime('%d/%m/%Y %H:%M') %>
+      </div>
+    </div>
+  </div>
+</div>
+
 <% if @log.Signout != @log.Signin %>
-<p>
-  <strong>Signed Out at:</strong>
-  <%= Time.parse(@log.Signout.to_s).strftime('%d/%m/%Y %H:%M') %>
-</p>
+<div class="row">
+  <div class='col-md-3'>
+    <div class="form-group">
+      <%= label_tag 'Signed Out at'%><br>
+      <div class='input-group' id='place'>
+        <%= Time.parse(@log.Signout.to_s).strftime('%d/%m/%Y %H:%M') %>
+      </div>
+    </div>
+  </div>
+</div>
 <% end %>
 
 <%= link_to 'Edit', edit_log_path(@log), class: "btn btn-link mclink" %> |
