@@ -67,6 +67,7 @@ class LogsController < ApplicationController
 
     respond_to do |format|
       if @log.save
+        hist
         format.html { redirect_to @log, notice: 'Sign In Successfull.' }
         format.json { render :show, status: :created, location: @log }
         UserMailer.log_email(@log, '1', current_user).deliver
@@ -83,6 +84,7 @@ class LogsController < ApplicationController
     @log = set_log
     respond_to do |format|
       if @log.update(log_params)
+        hist
         format.html { redirect_to @log, notice: 'Sign Out successfull.' }
         format.json { render :show, status: :ok, location: @log }
         UserMailer.log_email(@log, '2', current_user).deliver
@@ -93,10 +95,11 @@ class LogsController < ApplicationController
       end
     end
   end
-############################
-
   # GET /logs/1
   def show
+    @remote_ip = request.location
+
+    # @remote_ip = request.env["HTTP_CLIENT_IP"]
   end
 
   # GET /logs/new
@@ -122,6 +125,7 @@ class LogsController < ApplicationController
     @log = Log.new(log_params)
     @log.user_id = current_user.id
     @log.place_id = params[:post][:place_id]
+
 
     respond_to do |format|
       if @log.save
@@ -171,4 +175,13 @@ class LogsController < ApplicationController
     def log_params
       params.require(:log).permit(:Signin, :Signout)
     end
+
+  ############################
+  #   saving historic of geolocations
+  def hist
+    @histloc = Histloc.new
+    @histloc.log_id = @log.id
+    @histloc.save
+  end
+  ############################
 end

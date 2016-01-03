@@ -54,6 +54,9 @@ gem 'figaro'
 #pagination gem will_paginate
 gem 'will_paginate', '~> 3.0.6'
 
+#adding geocoder to get the coordinates from users Signing On and Off
+gem 'geocoder'
+
 group  :production do
 	gem 'pg'
 	gem 'rails_12factor'

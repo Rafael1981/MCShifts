@@ -49,6 +49,7 @@ GEM
     execjs (2.6.0)
     figaro (1.1.1)
       thor (~> 0.14)
+    geocoder (1.2.14)
     hike (1.2.3)
     i18n (0.7.0)
     jbuilder (2.3.1)
@@ -134,6 +135,7 @@ DEPENDENCIES
   bootstrap3-datetimepicker-rails (~> 4.17.37)
   coffee-rails (~> 4.0.0)
   figaro
+  geocoder
   jbuilder (~> 2.0)
   jquery-rails
   momentjs-rails (>= 2.10.6)
