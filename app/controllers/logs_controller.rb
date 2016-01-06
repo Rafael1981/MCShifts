@@ -61,16 +61,15 @@ class LogsController < ApplicationController
   # POST /signin
   def create_signin
     @log = Log.new(log_params)
-    @log.Signout = @log.Signin
+    @log.signout = @log.signin
     @log.user_id = current_user.id
     @log.place_id = params[:post][:place_id]
 
     respond_to do |format|
       if @log.save
-        hist
         format.html { redirect_to @log, notice: 'Sign In Successfull.' }
         format.json { render :show, status: :created, location: @log }
-        UserMailer.log_email(@log, '1', current_user).deliver
+        # UserMailer.log_email(@log, '1', current_user).deliver
       else
         format.html { render :signin }
         format.json { render json: @log.errors, status: :unprocessable_entity }
@@ -86,7 +85,7 @@ class LogsController < ApplicationController
       if @log.update(log_params)
         format.html { redirect_to @log, notice: 'Sign Out successfull.' }
         format.json { render :show, status: :ok, location: @log }
-        UserMailer.log_email(@log, '2', current_user).deliver
+        # UserMailer.log_email(@log, '2', current_user).deliver
 
       else
         format.html { render :edit }
@@ -96,24 +95,21 @@ class LogsController < ApplicationController
   end
   # GET /logs/1
   def show
-    @remote_ip = request.location
-
-    # @remote_ip = request.env["HTTP_CLIENT_IP"]
   end
 
   # GET /logs/new
   #todo: find a better solution for the timezone distortion in the browser
   def new
     @log = Log.new
-    @log.Signin = DateTime.now.change(:offset => "+0000")
-    @log.Signout = DateTime.now.change(:offset => "+0000")
+    @log.signin = DateTime.now.change(:offset => "+0000")
+    @log.signout = DateTime.now.change(:offset => "+0000")
     @places = Place.all
   end
 
   # GET /logs/1/edit
   def edit
     @log = set_log
-    unless (@log.Signin != @log.Signout)
+    unless (@log.signin != @log.signout)
       redirect_to '/logs'
     end
   end
@@ -130,7 +126,7 @@ class LogsController < ApplicationController
       if @log.save
         format.html { redirect_to @log, notice: 'Record was successfully created.' }
         format.json { render :show, status: :created, location: @log }        
-        UserMailer.log_email(@log, '1', current_user).deliver
+        # UserMailer.log_email(@log, '1', current_user).deliver
       else
         format.html { render :new }
         format.json { render json: @log.errors, status: :unprocessable_entity }
@@ -145,7 +141,7 @@ class LogsController < ApplicationController
       if @log.update(log_params)
         format.html { redirect_to @log, notice: 'Record was successfully updated.' }
         format.json { render :show, status: :ok, location: @log }     
-        UserMailer.log_email(@log, '2', current_user).deliver
+        # UserMailer.log_email(@log, '2', current_user).deliver
 
       else
         format.html { render :edit }
