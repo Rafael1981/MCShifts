@@ -20,12 +20,11 @@ class UsersController < ApplicationController
 		@user = User.new(user_params)
 		if @user.save
       # Tell the UserMailer to send a welcome email after save
-      UserMailer.welcome_email(@user).deliver
-			redirect_to '/users'
+     	redirect_to '/users'
+			# UserMailer.welcome_email(@user).deliver
 		else
 			format.html { render :new }
 			format.json { render json: @log.errors, status: :unprocessable_entity }
-			# redirect_to '/signup'
 		end
 	end
 
