@@ -84,7 +84,6 @@ class LogsController < ApplicationController
     @log = set_log
     respond_to do |format|
       if @log.update(log_params)
-        hist
         format.html { redirect_to @log, notice: 'Sign Out successfull.' }
         format.json { render :show, status: :ok, location: @log }
         UserMailer.log_email(@log, '2', current_user).deliver
@@ -176,12 +175,4 @@ class LogsController < ApplicationController
       params.require(:log).permit(:Signin, :Signout)
     end
 
-  ############################
-  #   saving historic of geolocations
-  def hist
-    @histloc = Histloc.new
-    @histloc.log_id = @log.id
-    @histloc.save
-  end
-  ############################
 end
