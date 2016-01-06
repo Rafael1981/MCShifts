@@ -7,11 +7,11 @@ function startTime() {
     var m = today.format("mm");
     // m = checkTime(m);
     // s = checkTime(s);
-    if (document.getElementById('log_Signout')) {
-        document.getElementById('log_Signout').value =
+    if (document.getElementById('log_signout')) {
+        document.getElementById('log_signout').value =
             D + "/" + M + "/" + Y + " " + h + ":" + m ;
     }else {
-        document.getElementById('log_Signin').value =
+        document.getElementById('log_signin').value =
             D + "/" + M + "/" + Y + " " + h + ":" + m;
     }
     document.getElementById('time').innerHTML =
