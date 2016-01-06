@@ -1,9 +1,13 @@
-<p id="notice"><%= notice %></p>
-
-<p>
-  <strong>Name:</strong>
-  <%= @place.name %>
-</p>
+<div class="row">
+  <div class='col-md-3'>
+    <div class="form-group">
+      <%= label_tag :Name %><br>
+      <div class='input-group' id='place'>
+        <%= @place.name %>
+      </div>
+    </div>
+  </div>
+</div>
 
 <%= link_to 'Edit', edit_place_path(@place),  class: "btn btn-link mclink" %> |
 <%= link_to 'Back', places_path,  class: "btn btn-link mclink" %>
