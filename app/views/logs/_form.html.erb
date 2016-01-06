@@ -29,7 +29,7 @@
             <div class="form-group">
               <%= label_tag "Signed In at:" %><br>
                 <div class='input-group date' id='datetimepicker1'>                    
-                    <%= f.text_field :Signin, 'data-behaviour' => 'datetimepicker', class: "form-control", :value=> Time.parse(f.object.Signin.to_s).strftime('%d/%m/%Y %H:%M') %>
+                    <%= f.text_field :signin, 'data-behaviour' => 'datetimepicker', class: "form-control", :value=> Time.parse(f.object.signin.to_s).strftime('%d/%m/%Y %H:%M') %>
                     <span class="input-group-addon">
                         <span class="glyphicon glyphicon-calendar"></span>
                     </span>
@@ -47,7 +47,7 @@
             <div class="form-group">
               <%= label_tag "Signed Out at:" %><br>
                 <div class='input-group date' id='datetimepicker2'>                    
-                    <%= f.text_field :Signout, 'data-behaviour' => 'datetimepicker', class: "form-control", :value=> Time.parse(f.object.Signout.to_s).strftime('%d/%m/%Y %H:%M %z') %>
+                    <%= f.text_field :signout, 'data-behaviour' => 'datetimepicker', class: "form-control", :value=> Time.parse(f.object.signout.to_s).strftime('%d/%m/%Y %H:%M %z') %>
                     <span class="input-group-addon">
                         <span class="glyphicon glyphicon-calendar"></span>
                     </span>
@@ -56,8 +56,8 @@
         </div>
         <script type="text/javascript">
             $(function () {
-                //var now1 = moment("<%= f.object.Signout %>");
-                //var now2 = moment("<%= Time.parse(f.object.Signout.to_s).strftime('%d/%m/%Y %H:%M %z') %>");
+                //var now1 = moment("<%= f.object.signout %>");
+                //var now2 = moment("<%= Time.parse(f.object.signout.to_s).strftime('%d/%m/%Y %H:%M %z') %>");
                 //var now3 = moment("<%= Time.parse(DateTime.now.to_s).strftime('%d/%m/%Y %H:%M') %>");
                 //alert(now);
                 $('#datetimepicker1').datetimepicker({

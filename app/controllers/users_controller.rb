@@ -1,11 +1,6 @@
 class UsersController < ApplicationController
 	before_action :require_admin, only: [:new, :create, :edit, :update, :index, :show]
   before_action :require_user
-  # GET /users
-  def index
-    @users = User.all
-  end
-
   # GET /users/1
   def show
   	 @user = User.find(params[:id])
@@ -28,7 +23,9 @@ class UsersController < ApplicationController
       UserMailer.welcome_email(@user).deliver
 			redirect_to '/users'
 		else
-			redirect_to '/signup'
+			format.html { render :new }
+			format.json { render json: @log.errors, status: :unprocessable_entity }
+			# redirect_to '/signup'
 		end
 	end
 

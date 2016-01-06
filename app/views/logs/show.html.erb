@@ -16,19 +16,19 @@
     <div class="form-group">
       <%= label_tag 'Signed In at'%><br>
       <div class='input-group' id='place'>
-        <%= Time.parse(@log.Signin.to_s).strftime('%d/%m/%Y %H:%M') %>
+        <%= Time.parse(@log.signin.to_s).strftime('%d/%m/%Y %H:%M') %>
       </div>
     </div>
   </div>
 </div>
 
-<% if @log.Signout != @log.Signin %>
+<% if @log.signout != @log.signin %>
 <div class="row">
   <div class='col-md-3'>
     <div class="form-group">
       <%= label_tag 'Signed Out at'%><br>
       <div class='input-group' id='place'>
-        <%= Time.parse(@log.Signout.to_s).strftime('%d/%m/%Y %H:%M') %>
+        <%= Time.parse(@log.signout.to_s).strftime('%d/%m/%Y %H:%M') %>
       </div>
     </div>
   </div>

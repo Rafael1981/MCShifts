@@ -27,11 +27,11 @@
           <% if current_user.admin? %>
             <td class="col-md-1"><%= log.user.firstname+" "+log.user.lastname %></td>
           <% end %>
-          <td class="col-md-1"><%= Time.parse(log.Signin.to_s).strftime('%d/%m/%Y %H:%M') %></td>
-          <td class="col-md-1"><%= Time.parse(log.Signout.to_s).strftime('%d/%m/%Y %H:%M') %></td>
+          <td class="col-md-1"><%= Time.parse(log.signin.to_s).strftime('%d/%m/%Y %H:%M') %></td>
+          <td class="col-md-1"><%= Time.parse(log.signout.to_s).strftime('%d/%m/%Y %H:%M') %></td>
           <td class="col-md-1"><%= log.place.name %></td>
 
-          <%  wrktime = log.Signout.to_i - log.Signin.to_i
+          <%  wrktime = log.signout.to_i - log.signin.to_i
               mm, ss = wrktime.divmod(60)            
               hh, mm = mm.divmod(60)%>
           <td class="col-md-1"><% if current_user.admin? %><%=  hh.to_s.rjust(2, '0') %>:<%= mm.to_s.rjust(2, '0') %><% else %> <% if log.Signin != log.Signout  %><%= link_to 'Edit', edit_log_path(log), class: "btn btn-link mclink" %> <% else %> <div class="btn btn-link mclink"> Period active </div><% end %> <% end %></td>

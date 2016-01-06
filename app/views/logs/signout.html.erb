@@ -30,11 +30,11 @@
 <%= Time.parse(@log.Signin.to_s).strftime('%d/%m/%Y %H:%M')  %><br><br>
 
 
-<%= hidden_field_tag "Signin",  Time.parse(@log.Signin.to_s).strftime('%d/%m/%Y %H:%M')  %>
+<%= hidden_field_tag "signin",  Time.parse(@log.signin.to_s).strftime('%d/%m/%Y %H:%M')  %>
 <%= hidden_field_tag "id",  @log.id  %>
 
 <%= label_tag "Time to be recorded:" %><br>
-<%= hidden_field_tag "log[Signout]" %>
+<%= hidden_field_tag "log[signout]" %>
 <div id="time" class="form-group"></div>
 
 <%= submit_tag("Sign Out" , class: "btn btn-primary btn-danger") %>
