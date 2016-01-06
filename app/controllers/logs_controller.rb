@@ -36,7 +36,7 @@ class LogsController < ApplicationController
     if current_user.admin?
       redirect_to '/logs'
     else
-      cnt = Log.where(user: current_user).where("signin = signout").count
+      cnt = Log.where(user: current_user).where("Signin = Signout").count
       if cnt == 0
         redirect_to '/signin'
       else
