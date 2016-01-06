@@ -11,11 +11,11 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20151020133337) do
+ActiveRecord::Schema.define(version: 20160106144626) do
 
   create_table "logs", force: true do |t|
-    t.datetime "Signin"
-    t.datetime "Signout"
+    t.datetime "signin"
+    t.datetime "signout"
     t.datetime "created_at"
     t.datetime "updated_at"
     t.integer  "user_id"
