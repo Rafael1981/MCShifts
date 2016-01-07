@@ -69,7 +69,7 @@ class LogsController < ApplicationController
       if @log.save
         format.html { redirect_to @log, notice: 'Sign In Successfull.' }
         format.json { render :show, status: :created, location: @log }
-        UserMailer.log_email(@log, '1', current_user).deliver
+        UserMailer.log_email(@log, current_user).deliver
       else
         format.html { render :signin }
         format.json { render json: @log.errors, status: :unprocessable_entity }
@@ -85,7 +85,7 @@ class LogsController < ApplicationController
       if @log.update(log_params)
         format.html { redirect_to @log, notice: 'Sign Out successfull.' }
         format.json { render :show, status: :ok, location: @log }
-        UserMailer.log_email(@log, '2', current_user).deliver
+        UserMailer.log_email(@log, current_user).deliver
 
       else
         format.html { render :edit }
@@ -141,7 +141,7 @@ class LogsController < ApplicationController
       if @log.update(log_params)
         format.html { redirect_to @log, notice: 'Record was successfully updated.' }
         format.json { render :show, status: :ok, location: @log }     
-        UserMailer.log_email(@log, '2', current_user).deliver
+        UserMailer.log_email(@log, current_user).deliver
 
       else
         format.html { render :edit }

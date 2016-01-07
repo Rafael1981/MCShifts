@@ -3,17 +3,25 @@ class UserMailer < ActionMailer::Base
 
    def welcome_email(user)
     @user = user
-    @url  = 'http://example.com/login'
-    email_with_name = %("#{@user.firstname}" <#{@user.email}>)
-    mail(to: ["mailstestruby@gmail.com",@user.email], subject: 'Welcome to MCShifts')
+    mail(:to => ["mailstestruby@gmail.com", @user.email], subject: 'Welcome to MCShifts')
   end
 
-  def log_email(log, action, user)
+  def log_email(log, user)
     @log = log
     @user = user
-    @action = action
-    @url  = 'http://example.com/login'
-    email_with_name = %("#{@user.firstname}" <#{@user.email}>)
-    mail(to: ["mailstestruby@gmail.com",@user.email], subject: 'New Sign In/Sign Out Information')
+    email_admins
+    # mail(:to => ["mailstestruby@gmail.com", @user.email], subject: 'New Sign In/Sign Out Information')
+    mail(:to => @email_list, subject: 'New Sign In/Sign Out Information')
   end
 end
+
+#
+private
+  def email_admins
+    @admin = User.all.where("role='admin'")
+    @email_list = Array(@user.email)
+    @admin.each do |admin|
+      @email_list << admin.email
+    end
+
+  end
