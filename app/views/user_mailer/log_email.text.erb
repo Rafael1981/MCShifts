@@ -1,10 +1,10 @@
 Hello,<%= @user.firstname %> 
 
-<% if @action == '1' %>Signed In at <%= Time.parse(@log.Signin.to_s).strftime('%d/%m/%Y %H:%M') %>. 
+<% if @action == '1' %>Signed In at <%= Time.parse(@log.signin.to_s).strftime('%d/%m/%Y %H:%M') %>.
       <% else %> 
-        <% if @log.Signin < @log.Signout && Time.parse(@log.created_at.to_s).strftime('%d/%m/%Y') == Time.parse(@log.updated_at.to_s).strftime('%d/%m/%Y')%>
-          Signed out at <%= Time.parse(@log.Signout.to_s).strftime('%d/%m/%Y %H:%M') %>. 
+        <% if @log.Signin < @log.signout && Time.parse(@log.created_at.to_s).strftime('%d/%m/%Y') == Time.parse(@log.updated_at.to_s).strftime('%d/%m/%Y')%>
+          Signed out at <%= Time.parse(@log.signout.to_s).strftime('%d/%m/%Y %H:%M') %>.
         <% else %> 
-          updated a record, now it has the Sign in time to <%= Time.parse(@log.Signin.to_s).strftime('%d/%m/%Y %H:%M') %> and Sign out time to <%= Time.parse(@log.Signout.to_s).strftime('%d/%m/%Y %H:%M') %>.
+          updated a record, now it has the Sign in time to <%= Time.parse(@log.signin.to_s).strftime('%d/%m/%Y %H:%M') %> and Sign out time to <%= Time.parse(@log.signout.to_s).strftime('%d/%m/%Y %H:%M') %>.
         <% end %>
       <% end %>
