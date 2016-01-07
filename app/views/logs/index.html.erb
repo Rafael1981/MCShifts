@@ -3,6 +3,4 @@
 <%= render 'list' %>
 <% if current_user.admin? %>
   <%= link_to 'Check Hours', reports_path, class: "btn btn-link mclink" %>
-<% else %>
-  <% link_to 'New Log', new_log_path, class: "btn btn-link mclink" %>
 <% end %>

@@ -1,18 +1,19 @@
 <!DOCTYPE html>
 <html>
   <head>
-    <meta content='text/html; charset=UTF-8' http-equiv='Content-Type' />
+    <meta content='text/html; charset=UTF-8' http-equiv='Content-Type'/>
   </head>
   <body>
 </p>
-    <h1>Hello,<%= @user.firstname %> 
+    <h3>Hello,<%= @user.firstname %>
       <% if @action == '1' %>Signed In at <%= Time.parse(@log.signin.to_s).strftime('%d/%m/%Y %H:%M') %>.
-      <% else %> 
-        <% if @log.signin < @log.signout && Time.parse(@log.created_at.to_s).strftime('%d/%m/%Y') == Time.parse(@log.updated_at.to_s).strftime('%d/%m/%Y')%>
+      <% else %>
+
+        <% if @log.signout > @log.signin && Time.parse(@log.created_at.to_s).strftime('%d/%m/%Y') != Time.parse(@log.updated_at.to_s).strftime('%d/%m/%Y')%>
           Signed out at <%= Time.parse(@log.signout.to_s).strftime('%d/%m/%Y %H:%M') %>.
         <% else %> 
-          updated a record, now it has the Sign in time to <%= Time.parse(@log.signin.to_s).strftime('%d/%m/%Y %H:%M') %> and Sign out time to <%= Time.parse(@log.signout.to_s).strftime('%d/%m/%Y %H:%M') %>.
+          created/updated a record, now it has the Sign in time to <%= Time.parse(@log.signin.to_s).strftime('%d/%m/%Y %H:%M') %> and Sign out time to <%= Time.parse(@log.signout.to_s).strftime('%d/%m/%Y %H:%M') %>.
         <% end %>
-      <% end %></h1>
+      <% end %></h3>
   </body>
 </html>
