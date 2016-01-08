@@ -35,11 +35,11 @@
             <% if current_user.admin? %>
               <td class="col-md-2"><%= log.user.firstname+" "+log.user.lastname %></td>
             <% end %>
-            <td class="col-md-2"><%= Time.parse(log.Signin.to_s).strftime('%d/%m/%Y %H:%M') %></td>
-            <td class="col-md-2"><%= Time.parse(log.Signout.to_s).strftime('%d/%m/%Y %H:%M') %></td>
+            <td class="col-md-2"><%= Time.parse(log.signin.to_s).strftime('%d/%m/%Y %H:%M') %></td>
+            <td class="col-md-2"><%= Time.parse(log.signout.to_s).strftime('%d/%m/%Y %H:%M') %></td>
             <td class="col-md-2"><%= log.place.name %></td>
 
-            <%  wrktime = log.Signout.to_i - log.Signin.to_i
+            <%  wrktime = log.signout.to_i - log.Signin.to_i
                 mm, ss = wrktime.divmod(60)            
                 hh, mm = mm.divmod(60)%>
             <td class="col-md-2"><%=  hh.to_s.rjust(2, '0') %>:<%= mm.to_s.rjust(2, '0') %></td>
@@ -49,7 +49,7 @@
         <% mm, ss = total.divmod(60)            
            hh, mm = mm.divmod(60)%>
         <tr>
-          <th colspan=<% if current_user.admin? %>"4"<%else%>"3"<%end%> align="right">Total hours for the period:</th>
+          <th colspan=<% if current_user.admin? %> <%= "4" %><% else %><%= "3" %><%end%> align="right">Total hours for the period:</th>
           <td><%= hh.to_s.rjust(2, '0') %>:<%= mm.to_s.rjust(2, '0') %></td>
         </tr>
       </tbody>
