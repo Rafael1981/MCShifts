@@ -39,7 +39,7 @@
             <td class="col-md-2"><%= Time.parse(log.signout.to_s).strftime('%d/%m/%Y %H:%M') %></td>
             <td class="col-md-2"><%= log.place.name %></td>
 
-            <%  wrktime = log.signout.to_i - log.Signin.to_i
+            <%  wrktime = log.signout.to_i - log.signin.to_i
                 mm, ss = wrktime.divmod(60)            
                 hh, mm = mm.divmod(60)%>
             <td class="col-md-2"><%=  hh.to_s.rjust(2, '0') %>:<%= mm.to_s.rjust(2, '0') %></td>
