@@ -1,6 +1,7 @@
 <h3>Worked Hours</h3>
 
 <%= render 'list' %>
+<%= will_paginate @logs, renderer: BootstrapPagination::Rails %>
 <% if current_user.admin? %>
-  <%= link_to 'Check Hours', reports_path, class: "btn btn-link mclink" %>
+  <%= link_to 'Hours Report', reports_path, class: "btn btn-link mclink" %>
 <% end %>

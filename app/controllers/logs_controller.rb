@@ -11,7 +11,7 @@ class LogsController < ApplicationController
       # else
       #  @logs = Log.where(user: current_user).order("created_at DESC")
       # end
-      @logs = Log.where(user: current_user).paginate(:page => params[:page], :per_page => 5).order("created_at DESC")
+      @logs = Log.where(user: current_user).order("created_at DESC")
     else
       cnt = Log.where("user_id>0").count
       if cnt >= 7
@@ -21,11 +21,7 @@ class LogsController < ApplicationController
       end
 
     end
-
-    #############.paginate(:page => params[:page], :per_page => 10)
-
-    ############
-
+    @logs = @logs.paginate(:page => params[:page], :per_page => 5)
 
   end
 
