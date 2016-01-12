@@ -63,8 +63,8 @@ class LogsController < ApplicationController
 
     respond_to do |format|
       if @log.save
-        format.html { redirect_to @log, notice: 'Sign In Successfull.' }
-        format.json { render :show, status: :created, location: @log }
+        format.html { redirect_to '/signout', notice: 'Sign In Successfull.' }
+        format.json { render :create_signout, status: :created, location: @log }
         UserMailer.log_email(@log, current_user).deliver
       else
         format.html { render :signin }
