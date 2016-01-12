@@ -83,7 +83,7 @@ class LogsController < ApplicationController
           format.json { render json: @log.errors, status: :unprocessable_entity }
         end
       else
-        format.html {redirect_to '/logs', :flash => {error: "Sign out of it before Singing in again."} }
+        format.html {redirect_to '/logs', :flash => {error: 'Sign out of it before Singing in again.'} }
         format.json { render json: @log.errors, status: :unprocessable_entity }
       end
     end
