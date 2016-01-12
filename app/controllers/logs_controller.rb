@@ -43,14 +43,24 @@ class LogsController < ApplicationController
 
   # GET /signin
   def signin
-    @log = Log.new
-    @places = Place.all
+    cnt = Log.where(user: current_user).where("signin = signout").count
+    if cnt == 0
+      @log = Log.new
+      @places = Place.all
+    else
+      redirect_to '/signout'
+    end
   end
 
 
   # GET /signout
   def signout
-    @log = Log.where(user: current_user).where("signin = signout").order("id DESC").first
+    cnt = Log.where(user: current_user).where("signin = signout").count
+    if cnt > 0
+      @log = Log.where(user: current_user).where("signin = signout").order("id DESC").first
+    else
+      redirect_to '/signin'
+    end
   end
 
 ###########################3
@@ -62,12 +72,18 @@ class LogsController < ApplicationController
     @log.place_id = params[:post][:place_id]
 
     respond_to do |format|
-      if @log.save
-        format.html { redirect_to '/signout', notice: 'Sign In Successfull.' }
-        format.json { render :create_signout, status: :created, location: @log }
-        UserMailer.log_email(@log, current_user).deliver
+      cnt = Log.where(user: current_user).where("signin = signout").count
+      if cnt == 0
+        if @log.save
+          format.html { redirect_to '/signout', notice: 'Sign In Successfull.' }
+          format.json { render :create_signout, status: :created, location: @log }
+          UserMailer.log_email(@log, current_user).deliver
+        else
+          format.html { render :signin }
+          format.json { render json: @log.errors, status: :unprocessable_entity }
+        end
       else
-        format.html { render :signin }
+        format.html {redirect_to '/logs', :flash => {error: "Sign out of it before Singing in again."} }
         format.json { render json: @log.errors, status: :unprocessable_entity }
       end
     end
@@ -77,16 +93,21 @@ class LogsController < ApplicationController
   # POST /signout
   def create_signout
     @log = set_log
-    respond_to do |format|
-      if @log.update(log_params)
-        format.html { redirect_to @log, notice: 'Sign Out successfull.' }
-        format.json { render :show, status: :ok, location: @log }
-        UserMailer.log_email(@log, current_user).deliver
+      respond_to do |format|
+        if @log.signin == @log.signout
+          if @log.update(log_params)
+            format.html { redirect_to '/logs', notice: 'Sign Out successfull.' }
+            format.json { render :show, status: :ok, location: @log }
+            UserMailer.log_email(@log, current_user).deliver
 
-      else
-        format.html { render :edit }
-        format.json { render json: @log.errors, status: :unprocessable_entity }
-      end
+          else
+            format.html { render :edit }
+            format.json { render json: @log.errors, status: :unprocessable_entity }
+          end
+        else
+          format.html {redirect_to '/logs', :flash => { :error => "This shift is already closed." } }
+          format.json { render json: @log.errors, status: :unprocessable_entity }
+        end
     end
   end
   # GET /logs/1

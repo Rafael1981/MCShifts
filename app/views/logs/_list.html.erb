@@ -17,7 +17,7 @@
           Place
         </th>
         <th>
-          <% if current_user.admin? %>Total <% else %> Update <% end %>
+          <% if current_user.admin? %>Total <% else %> Action <% end %>
         </th>
     </thead>
     <tbody>
@@ -34,7 +34,7 @@
           <%  wrktime = log.signout.to_i - log.signin.to_i
               mm, ss = wrktime.divmod(60)            
               hh, mm = mm.divmod(60)%>
-          <td class="col-md-1"><% if current_user.admin? %><%=  hh.to_s.rjust(2, '0') %>:<%= mm.to_s.rjust(2, '0') %><% else %> <% if log.signin != log.signout  %><%= link_to 'Edit', edit_log_path(log), class: "btn btn-link mclink" %> <% else %> <div class="btn btn-link mclink"> Period active </div><% end %> <% end %></td>
+          <td class="col-md-1"><% if current_user.admin? %><%=  hh.to_s.rjust(2, '0') %>:<%= mm.to_s.rjust(2, '0') %><% else %> <% if log.signin != log.signout  %><%= link_to 'Edit', edit_log_path(log), class: "btn btn-link mclink" %> <% else %> <%= link_to 'Sign Out', signout_path, class: "btn btn-link mclink" %> <% end %> <% end %></td>
         </tr>
       <% end %>
     </tbody>
