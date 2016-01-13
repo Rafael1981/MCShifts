@@ -16,4 +16,31 @@ class ApplicationController < ActionController::Base
   def require_admin
     redirect_to '/' unless current_user && current_user.admin? 
   end
+
+  def sms_signin(user,log)
+    msg = user.firstname+' Signed in at ' + log.signin
+    params = {'username' => ENV["SMS_USER"],
+              'password'=> ENV["SMS_PASS"],
+              'to'=> '0411654588',
+              'from'=> 'MCShifts',
+              'message'=> msg,
+              'button1' => 'Submit'
+    }
+    # x = Net::HTTP.post_form(URI.parse('https://api.smsbroadcast.com.au/api-adv.php'), params)
+    # puts x.body
+  end
+
+  def sms_signout(user,log)
+    msg = user.firstname+' Signed out at ' + log.signout
+    params = {'username' => ENV["SMS_USER"],
+              'password'=> ENV["SMS_PASS"],
+              'to'=> '0411654588',
+              'from'=> 'MCShifts',
+              'message'=> msg,
+              'button1' => 'Submit'
+    }
+    # x = Net::HTTP.post_form(URI.parse('https://api.smsbroadcast.com.au/api-adv.php'), params)
+    # puts x.body
+  end
+
 end

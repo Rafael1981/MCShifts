@@ -29,7 +29,8 @@ class UsersController < ApplicationController
 	end
 
 	def edit
-  	 @user = User.find(params[:id])
+    @user = User.find(params[:id])
+
 	end
 
 	def password
@@ -43,7 +44,7 @@ class UsersController < ApplicationController
   	
     respond_to do |format|
       if @user.update(user_params)
-        format.html { redirect_to @user, notice: 'User was successfully updated.' }
+        format.html { redirect_to users_path, notice: 'User was successfully updated.' }
         format.json { render :show, status: :ok, location: @user }
       else
         format.html { render :edit }
@@ -54,6 +55,6 @@ class UsersController < ApplicationController
 
 	private
 	def user_params
-		params.require(:user).permit(:firstname, :middlename, :lastname, :email, :password)
+		params.require(:user).permit(:firstname, :middlename, :lastname, :email, :password, :mobile, :active)
 	end
 end

@@ -1,6 +1,10 @@
 class LogsController < ApplicationController
   before_action :set_log, only: [:show, :edit, :update, :destroy]
   before_action :require_user
+######################
+   require 'net/https'
+   require 'open-uri'
+  #################
 
   # GET /logs
   def index
@@ -29,6 +33,7 @@ class LogsController < ApplicationController
   # GET /root
 
   def root
+    # sms
     if current_user.admin?
       redirect_to '/logs'
     else
@@ -77,6 +82,7 @@ class LogsController < ApplicationController
         if @log.save
           format.html { redirect_to '/signout', notice: 'Sign In Successfull.' }
           format.json { render :create_signout, status: :created, location: @log }
+          sms_signin(current_user,@log)
           UserMailer.log_email(@log, current_user).deliver
         else
           format.html { render :signin }
@@ -177,6 +183,19 @@ class LogsController < ApplicationController
     end
   end
 
+
+  def sms
+    params = {'username' => ENV["SMS_USER"],
+              'password'=> ENV["SMS_PASS"],
+              'to'=> '0411654588',
+              'from'=> 'MCShifts',
+              'message'=> 'Test ok',
+              'button1' => 'Submit'
+    }
+    # x = Net::HTTP.post_form(URI.parse('https://api.smsbroadcast.com.au/api-adv.php'), params)
+    # puts x.body
+  end
+
   private
     # Use callbacks to share common setup or constraints between actions.
     def set_log
@@ -187,5 +206,4 @@ class LogsController < ApplicationController
     def log_params
       params.require(:log).permit(:signin, :signout)
     end
-
 end
