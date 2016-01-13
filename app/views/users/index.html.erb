@@ -44,4 +44,6 @@
   </table>
 </div>
 
+<%= will_paginate @users, renderer: BootstrapPagination::Rails %>
+
 <%= link_to 'New User', signup_path, class: "btn btn-link mclink" %>
