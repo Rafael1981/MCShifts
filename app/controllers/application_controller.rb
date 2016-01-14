@@ -39,7 +39,7 @@ class ApplicationController < ActionController::Base
 
 
   def mobile_admins
-    admin = User.all.where('role="admin"')
+    admin = User.all.where("role='admin'")
     if admin.count == 1
       @mobile_list = Array(admin.first.mobile)
     else
