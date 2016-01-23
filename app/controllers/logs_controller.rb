@@ -132,7 +132,7 @@ class LogsController < ApplicationController
   # GET /logs/1/edit
   def edit
     @log = set_log
-    unless (@log.signin != @log.signout)
+    unless (@log.signin != @log.signout) && (Time.parse(@log.created_at.to_s).strftime('%d/%m/%Y')) < (Time.parse((DateTime.now - 2).to_s).strftime('%d/%m/%Y'))
       redirect_to '/logs'
     end
   end
