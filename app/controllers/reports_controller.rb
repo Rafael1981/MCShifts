@@ -16,6 +16,7 @@ class ReportsController < ApplicationController
 		if current_user.admin?
 			@userselected = User.find(params[:post][:person_id])
       @clientselected = params[:post][:client_id]
+      @clientname = Client.find(params[:post][:client_id]).name
 			if @userselected.present?
 				@logs = Log.where(user: @userselected).where("Signin  BETWEEN :start_date AND :end_date",  {start_date: Time.parse(@mindate), end_date: Time.parse(@maxdate)}).order("Signin DESC")
 			else
