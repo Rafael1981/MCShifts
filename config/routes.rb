@@ -4,6 +4,7 @@ Rails.application.routes.draw do
 
   resources :logs, only: [:edit, :update, :index, :show]
   resources :users, only: [:new, :create, :edit, :update, :index, :show]
+  resources :clients, only: [:new, :create, :edit, :update, :index, :show]
   resource :user_sessions, only: [:new, :create, :destroy]
   
   get 'pages/about'

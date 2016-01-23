@@ -7,7 +7,16 @@
       </div>
     </div>
   </div>
+  <div class='col-md-2'>
+    <div class="form-group">
+      <%= label_tag :Client %><br>
+      <div class='input-group' id='place'>
+        <%= @place.client.name %>
+      </div>
+    </div>
+  </div>
 </div>
+
 
 <%= link_to 'Edit', edit_place_path(@place),  class: "btn btn-link mclink" %> |
 <%= link_to 'Back', places_path,  class: "btn btn-link mclink" %>

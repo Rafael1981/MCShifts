@@ -20,7 +20,7 @@
       <div class="form-group">
         <%= label_tag :title, :Place %><br>
         <div class='input-group' id='place'>
-          <%= select("post", "place_id", Place.all.collect {|p| [ p.name, p.id ] }, {}, class: "form-control")%>
+          <%= select("post", "place_id", @places.collect {|p| [ p.name, p.id ] }, {}, class: "form-control")%>
         </div>
       </div>
     </div>

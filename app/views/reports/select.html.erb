@@ -6,7 +6,16 @@
     <div class='col-md-3'>
       <div class="form-group">
         <div class='input-group' id='user'>
-          <%= select("post", "person_id", @users.collect {|p| [ p.firstname+" "+p.lastname, p.id ] }, { include_blank: "All"}, class: "form-control")%>
+          <%= select("post", "person_id", @users.collect {|p| [ p.firstname+" "+p.lastname, p.id ] }, { include_blank: "All Employees"}, class: "form-control")%>
+        </div>
+      </div>
+    </div>
+  </div>
+  <div class="row">
+    <div class='col-md-3'>
+      <div class="form-group">
+        <div class='input-group' id='client'>
+          <%= select("post", "client_id", @client.collect {|p| [ p.name, p.id ] }, { include_blank: "All Clients"}, class: "form-control")%>
         </div>
       </div>
     </div>

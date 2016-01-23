@@ -1,0 +1,13 @@
+<div class="row">
+  <div class='col-md-3'>
+    <div class="form-group">
+      <%= label_tag :Client %><br>
+      <div class='input-group' id='place'>
+        <%= @client.name %>
+      </div>
+    </div>
+  </div>
+</div>
+
+<%= link_to 'Edit', edit_client_path(@client),  class: "btn btn-link mclink" %> |
+<%= link_to 'Back', clients_path,  class: "btn btn-link mclink" %>

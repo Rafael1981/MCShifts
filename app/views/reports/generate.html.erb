@@ -1,7 +1,7 @@
 <h3>Worked Hours</h3>
   <p>From: <%= Time.parse(@mindate.to_s).strftime('%d/%m/%Y %H:%M')%><p/>
   <p>To: <%= Time.parse(@maxdate.to_s).strftime('%d/%m/%Y %H:%M')%><p/>
-  <p>Employee: <% if @userselected.present? %> <%= current_user.firstname+" "+current_user.lastname %><% else %>All Employees <% end %><p/>
+  <p>Employee: <% if @userselected.present? %> <%=  @userselected.firstname+" "+ @userselected.lastname %><% else %>All Employees <% end %><p/>
 
 
   <div class="table-responsive">

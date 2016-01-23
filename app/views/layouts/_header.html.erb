@@ -26,6 +26,7 @@
               <% if current_user.admin? %>
               <li><%= link_to "Add Employee", signup_path %></li>
               <li><%= link_to "List Employees", users_path %></li>
+              <li><%= link_to "List Clients", clients_path %></li>
               <li><%= link_to "List Places", places_path %></li>
               <% end %>
               <li><%= link_to "Check Hours", logs_path %></li>

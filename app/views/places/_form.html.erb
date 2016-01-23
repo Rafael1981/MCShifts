@@ -11,7 +11,16 @@
     </div>
   <% end %>
 
-
+    <div class="row">
+      <div class='col-md-3'>
+        <div class="form-group">
+          <%= label_tag :title, :Client %><br>
+          <div class='input-group' id='client'>
+            <%= select("post", "client_id", @clients.collect {|p| [ p.name, p.id ] }, {}, class: "form-control")%>
+          </div>
+        </div>
+      </div>
+    </div>
   <div class="row">
     <div class='col-sm-3'>
       <div class="form-group">

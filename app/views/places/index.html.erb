@@ -8,6 +8,9 @@
           <div align="center">Name</div>
         </th>
         <th class="col-md-1">
+          <div align="center">Client</div>
+        </th>
+        <th class="col-md-1">
           <div align="center">Actions</div>
         </th>
     </thead>
@@ -15,7 +18,8 @@
       <% @places.each do |place| %>
         <tr>
           <% if current_user.admin? %>
-            <td class="col-md-1"><%= place.name %></td>
+              <td class="col-md-1"><%= place.name %></td>
+              <td class="col-md-1"><%= place.client.name %></td>
             <td class="col-md-1"><%= link_to 'Edit', edit_place_path(place), class: "btn btn-link mclink" %></td>
           <% end %>
         </tr>

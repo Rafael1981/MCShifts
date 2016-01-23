@@ -1,5 +1,5 @@
 class PlacesController < ApplicationController
-  before_action :set_place, only: [:show, :edit, :update, :destroy]
+  before_action :set_place, only: [:show, :edit, :update]
   before_action :require_admin
   # GET /places
   # GET /places.json
@@ -15,10 +15,12 @@ class PlacesController < ApplicationController
   # GET /places/new
   def new
     @place = Place.new
+    @clients = Client.all
   end
 
   # GET /places/1/edit
   def edit
+    @clients = Client.all
   end
 
   # POST /places
@@ -51,15 +53,6 @@ class PlacesController < ApplicationController
     end
   end
 
-  # DELETE /places/1
-  # DELETE /places/1.json
-  def destroy
-    @place.destroy
-    respond_to do |format|
-      format.html { redirect_to places_url, notice: 'Place was successfully destroyed.' }
-      format.json { head :no_content }
-    end
-  end
 
   private
     # Use callbacks to share common setup or constraints between actions.
@@ -69,6 +62,6 @@ class PlacesController < ApplicationController
 
     # Never trust parameters from the scary internet, only allow the white list through.
     def place_params
-      params.require(:place).permit(:name)
+      params.require(:place).permit(:name, :client)
     end
 end
