@@ -59,7 +59,7 @@
 #     auth_methods: %w(publickey password)
 #     # password: 'please use keys'
 #   }
-set :port, 22
+set :port, 1026
 set :user, 'deployer'
 set :deploy_via, :remote_cache
 set :use_sudo, false
