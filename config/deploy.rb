@@ -1,7 +1,7 @@
 # config valid only for current version of Capistrano
 lock '3.4.0'
 
-set :application, 'MCShifts'
+set :application, 'mcshifts'
 set :repo_url, 'git@github.com:Rafael1981/MCShifts.git'
 set :deploy_to, '/opt/www/mcshifts'
 set :user, 'deployer'
