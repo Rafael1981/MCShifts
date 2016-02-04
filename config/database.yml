@@ -27,4 +27,4 @@ production:
    host: localhost
    username: deployer
    password: LGE570ge18
-   database: MCShifts_production
+   database: mcshifts_production
