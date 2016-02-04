@@ -55,16 +55,19 @@ gem 'figaro'
 gem 'will_paginate', '~> 3.0.6'
 gem 'will_paginate-bootstrap'
 
+
+
+gem 'unicorn'
+gem 'capistrano-rails'
+gem 'capistrano-rvm'
+gem 'capistrano3-unicorn'
+
+
 group  :production do
 	gem 'pg'
 	gem 'rails_12factor'
-  gem 'unicorn'
 end
-
 group :development, :test do
-	gem 'pg'
-  gem 'capistrano-rails'
-  gem 'capistrano-rvm'
-  gem 'capistrano3-unicorn'
+	gem 'sqlite3'
 end
 

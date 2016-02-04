@@ -3,20 +3,32 @@ lock '3.4.0'
 
 set :application, 'MCShifts'
 set :repo_url, 'git@github.com:Rafael1981/MCShifts.git'
+set :deploy_to, '/opt/www/mcshifts'
+set :user, 'deployer'
+set :linked_dirs, %w{log tmp/pids tmp/cache tmp/sockets}
 
 ask :branch, proc { `git rev-parse --abbrev-ref HEAD`.chomp }.call
 
-set :use_sudo, false
-set :bundle_binstubs, nil
-set :linked_files, fetch(:linked_files, []).push('config/database.yml')
-set :linked_dirs, fetch(:linked_dirs, []).push('log', 'tmp/pids', 'tmp/cache', 'tmp/sockets', 'vendor/bundle', 'public/system')
+# set :use_sudo, false
+# set :bundle_binstubs, nil
+# set :linked_files, fetch(:linked_files, []).push('config/database.yml')
+# set :linked_dirs, fetch(:linked_dirs, []).push('log', 'tmp/pids', 'tmp/cache', 'tmp/sockets', 'vendor/bundle', 'public/system')
 
 after 'deploy:publishing', 'deploy:restart'
 
 namespace :deploy do
-  task :restart do
-    invoke 'unicorn:reload'
+
+  %w[start stop restart].each do |command|
+    desc 'Manage Unicorn'
+    task command do
+      on roles(:app), in: :sequence, wait: 1 do
+        execute "/etc/init.d/unicorn_#{fetch(:application)} #{command}"
+      end
+    end
   end
+
+  after :publishing, :restart
+
 end
 
 # Default branch is :master
