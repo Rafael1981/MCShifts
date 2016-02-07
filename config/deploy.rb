@@ -11,7 +11,7 @@ set :rvm_ruby_version, 'ruby-2.1.5'
 ask :branch, proc { `git rev-parse --abbrev-ref HEAD`.chomp }.call
 
 namespace :db do
-  task :db_config, :except => { :no_release => true }, :role => :app do
+  task :db_config do
     run "cp -f ~/database.yml #{release_path}/config/database.yml"
   end
 end
