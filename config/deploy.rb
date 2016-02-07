@@ -10,6 +10,7 @@ set :rvm_ruby_version, 'ruby-2.1.5'
 
 ask :branch, proc { `git rev-parse --abbrev-ref HEAD`.chomp }.call
 
+after 'deploy:publishing'
 namespace :db do
   task :db_config do
     run "cp -f ~/database.yml #{release_path}/config/database.yml"
@@ -22,7 +23,7 @@ end
 # set :linked_files, fetch(:linked_files, []).push('config/database.yml')
 # set :linked_dirs, fetch(:linked_dirs, []).push('log', 'tmp/pids', 'tmp/cache', 'tmp/sockets', 'vendor/bundle', 'public/system')
 
-after 'deploy:publishing', 'deploy:restart'
+after  'deploy:restart'
 
 namespace :deploy do
 
