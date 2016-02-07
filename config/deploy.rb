@@ -10,7 +10,13 @@ set :rvm_ruby_version, 'ruby-2.1.5'
 
 ask :branch, proc { `git rev-parse --abbrev-ref HEAD`.chomp }.call
 
-execute "cp -f ~/database.yml #{release_path}/config/database.yml"
+namespace :db do
+  task :db_config, :except => { :no_release => true }, :role => :app do
+    run "cp -f ~/database.yml #{release_path}/config/database.yml"
+  end
+end
+
+
 # set :use_sudo, false
 # set :bundle_binstubs, nil
 # set :linked_files, fetch(:linked_files, []).push('config/database.yml')
