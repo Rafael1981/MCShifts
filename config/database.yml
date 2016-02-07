@@ -25,6 +25,6 @@ production:
    encoding: unicode
    pool: 5
    host: localhost
-   username: deployer
-   password: LGE570ge18
+   username: ENV["DB_USER"]
+   password: ENV["DB_PASSW"]
    database: mcshifts_production
