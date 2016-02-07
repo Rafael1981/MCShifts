@@ -10,8 +10,7 @@ set :rvm_ruby_version, 'ruby-2.1.5'
 
 ask :branch, proc { `git rev-parse --abbrev-ref HEAD`.chomp }.call
 
-# Uploading only linked_files
-before :finishing, 'linked_files:upload_files'
+
 
 # set :use_sudo, false
 # set :bundle_binstubs, nil
