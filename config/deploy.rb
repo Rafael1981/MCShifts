@@ -6,6 +6,7 @@ set :repo_url, 'git@github.com:Rafael1981/MCShifts.git'
 set :deploy_to, '/opt/www/mcshifts'
 set :user, 'deployer'
 set :linked_dirs, %w{log tmp/pids tmp/cache tmp/sockets}
+set :rvm_ruby_version, 'default'
 
 ask :branch, proc { `git rev-parse --abbrev-ref HEAD`.chomp }.call
 
