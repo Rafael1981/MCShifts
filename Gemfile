@@ -61,7 +61,7 @@ gem 'unicorn'
 gem 'capistrano-rails'
 gem 'capistrano-rvm'
 gem 'capistrano3-unicorn'
-
+gem 'capistrano-linked-files'
 
 group  :production do
 	gem 'pg'

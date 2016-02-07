@@ -10,20 +10,15 @@ set :rvm_ruby_version, 'ruby-2.1.5'
 
 ask :branch, proc { `git rev-parse --abbrev-ref HEAD`.chomp }.call
 
-after 'deploy:publishing'
-namespace :db do
-  task :db_config do
-    run "cp -f ~/database.yml #{release_path}/config/database.yml"
-  end
-end
-
+# Uploading only linked_files
+before :finishing, 'linked_files:upload_files'
 
 # set :use_sudo, false
 # set :bundle_binstubs, nil
 # set :linked_files, fetch(:linked_files, []).push('config/database.yml')
 # set :linked_dirs, fetch(:linked_dirs, []).push('log', 'tmp/pids', 'tmp/cache', 'tmp/sockets', 'vendor/bundle', 'public/system')
 
-after  'deploy:restart'
+after 'deploy:publishing', 'deploy:restart'
 
 namespace :deploy do
 
@@ -60,6 +55,8 @@ end
 
 # Default value for :linked_files is []
 # set :linked_files, fetch(:linked_files, []).push('config/database.yml', 'config/secrets.yml')
+
+set :linked_files, %w(config/database.yml config/secrets.yml)
 
 # Default value for linked_dirs is []
 # set :linked_dirs, fetch(:linked_dirs, []).push('log', 'tmp/pids', 'tmp/cache', 'tmp/sockets', 'vendor/bundle', 'public/system')
