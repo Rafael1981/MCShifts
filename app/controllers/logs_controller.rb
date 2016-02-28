@@ -47,23 +47,31 @@ class LogsController < ApplicationController
 
   # GET /signin
   def signin
-    cnt = Log.where(user: current_user).where("signin = signout").count
-    if cnt == 0
-      @log = Log.new
-      @places = Place.all
+    if current_user.admin?
+      redirect_to '/logs'
     else
-      redirect_to '/signout'
+      cnt = Log.where(user: current_user).where("signin = signout").count
+      if cnt == 0
+        @log = Log.new
+        @places = Place.all
+      else
+        redirect_to '/signout'
+      end
     end
   end
 
 
   # GET /signout
   def signout
-    cnt = Log.where(user: current_user).where("signin = signout").count
-    if cnt > 0
-      @log = Log.where(user: current_user).where("signin = signout").order("id DESC").first
+    if current_user.admin?
+      redirect_to '/logs'
     else
-      redirect_to '/signin'
+      cnt = Log.where(user: current_user).where("signin = signout").count
+      if cnt > 0
+        @log = Log.where(user: current_user).where("signin = signout").order("id DESC").first
+      else
+        redirect_to '/signin'
+      end
     end
   end
 
