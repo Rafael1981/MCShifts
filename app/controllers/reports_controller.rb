@@ -12,7 +12,7 @@ class ReportsController < ApplicationController
 	def generate
 
 		@mindate = params[:mindate]
-		@maxdate = params[:maxdate]			
+		@maxdate = params[:maxdate]
 		if current_user.admin?
 		  @clientname = Client.find(params[:post][:client_id]).name
 			if params[:post][:person_id].present?
@@ -26,7 +26,12 @@ class ReportsController < ApplicationController
 				@logs = @logs.joins(:place).where("places.client_id = ?", @clientselected)
       end
 		else
-			@logs = Log.where(user: current_user).order("Signin DESC")
+			@logs = Log.where(user: current_user).where("Signin  BETWEEN :start_date AND :end_date",  {start_date: Time.parse(@mindate), end_date: Time.parse(@maxdate)}).order("Signin DESC")
 		end		
+	end
+
+  private
+	def report_params
+		params.require(:report).permit(:mindate, :maxdate)
 	end
 end

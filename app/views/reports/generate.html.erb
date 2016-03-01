@@ -1,8 +1,8 @@
 <h3>Worked Hours</h3>
   <p>From: <%= Time.parse(@mindate.to_s).strftime('%d/%m/%Y %H:%M')%><p/>
   <p>To: <%= Time.parse(@maxdate.to_s).strftime('%d/%m/%Y %H:%M')%><p/>
+<% if current_user.admin? %>
   <p>Employee: <% if @userselected.present? %> <%=  @userselected.firstname+" "+ @userselected.lastname %><% else %>All Employees <% end %><p/>
-  <% if current_user.admin? %>
   <p>Client:<% if @clientname.present? %> <%= @clientname %> <% else %>All Clients<% end %><p/>
   <% end %>
 
