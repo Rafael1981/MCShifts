@@ -14,7 +14,6 @@ class ReportsController < ApplicationController
 		@mindate = params[:mindate]
 		@maxdate = params[:maxdate]
 		if current_user.admin?
-		  @clientname = Client.find(params[:post][:client_id]).name
 			if params[:post][:person_id].present?
 				@userselected = User.find(params[:post][:person_id])
 				@logs = Log.where(user: @userselected).where("Signin  BETWEEN :start_date AND :end_date",  {start_date: Time.parse(@mindate), end_date: Time.parse(@maxdate)}).order("Signin DESC")
@@ -22,6 +21,7 @@ class ReportsController < ApplicationController
 				@logs = Log.where("Signin  BETWEEN :start_date AND :end_date",  {start_date: Time.parse(@mindate), end_date: Time.parse(@maxdate)}).order("Signin DESC")
       end
       if params[:post][:client_id].present?
+				@clientname = Client.find(params[:post][:client_id]).name
 				@clientselected = params[:post][:client_id]
 				@logs = @logs.joins(:place).where("places.client_id = ?", @clientselected)
       end
