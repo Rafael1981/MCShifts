@@ -126,6 +126,7 @@ class LogsController < ApplicationController
   end
   # GET /logs/1
   def show
+    redirect_to '/logs'
   end
 
   # GET /logs/new
@@ -140,7 +141,7 @@ class LogsController < ApplicationController
   # GET /logs/1/edit
   def edit
     @log = set_log
-    unless (@log.signin != @log.signout) && (Time.parse(@log.created_at.to_s).strftime('%d/%m/%Y')) < (Time.parse((DateTime.now - 2).to_s).strftime('%d/%m/%Y'))
+    unless (@log.signin != @log.signout) && ((Time.parse(@log.created_at.to_s).strftime('%d/%m/%Y')) > (Time.parse((DateTime.now - 2).to_s).strftime('%d/%m/%Y')))
       redirect_to '/logs'
     end
   end
@@ -155,8 +156,8 @@ class LogsController < ApplicationController
 
     respond_to do |format|
       if @log.save
-        format.html { redirect_to @log, notice: 'Record was successfully created.' }
-        format.json { render :show, status: :created, location: @log }        
+        format.html { redirect_to '/logs', notice: 'Record was successfully created.' }
+        format.json { render :index, status: :created, location: @log }
         # UserMailer.log_email(@log, '1', current_user).deliver
       else
         format.html { render :new }
@@ -170,8 +171,8 @@ class LogsController < ApplicationController
   def update
     respond_to do |format|
       if @log.update(log_params)
-        format.html { redirect_to @log, notice: 'Record was successfully updated.' }
-        format.json { render :show, status: :ok, location: @log }     
+        format.html { redirect_to '/logs', notice: 'Record was successfully updated.' }
+        format.json { render :index, status: :ok, location: @log }
         UserMailer.log_email(@log, current_user).deliver
 
       else
