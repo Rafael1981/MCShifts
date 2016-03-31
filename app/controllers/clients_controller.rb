@@ -8,7 +8,7 @@ class ClientsController < ApplicationController
 
 #   :create, :edit, :update, :index, :show
   def create
-    @client = Client.new(place_params)
+    @client = Client.new(client_params)
 
     respond_to do |format|
       if @client.save
@@ -36,8 +36,8 @@ class ClientsController < ApplicationController
     @client = Client.find(params[:id])
 
     respond_to do |format|
-      if @client.update(user_params)
-        format.html { redirect_to users_path, notice: 'User was successfully updated.' }
+      if @client.update(client_params)
+        format.html { redirect_to client_path, notice: 'Client was successfully updated.' }
         format.json { render :show, status: :ok, location: @client }
       else
         format.html { render :edit }
@@ -49,11 +49,16 @@ class ClientsController < ApplicationController
   private
 # Use callbacks to share common setup or constraints between actions.
   def set_client
-    @client = Client.find(params[:id])
+    if Client.find_by id: params[:id]
+      @client = Client.find_by id: params[:id]
+    else
+      redirect_to '/clients',notice:'Client was not found.'
+    end
+
   end
 
 # Never trust parameters from the scary internet, only allow the white list through.
-  def place_params
+  def client_params
     params.require(:client).permit(:name)
   end
 end

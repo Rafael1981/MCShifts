@@ -17,7 +17,7 @@
         <tr>
           <% if current_user.admin? %>
             <td class="col-md-1"><%= client.name %></td>
-            <td class="col-md-1"><%= link_to 'Edit', edit_place_path(client), class: "btn btn-link mclink" %></td>
+            <td class="col-md-1"><%= link_to 'Edit', edit_client_path(client), class: "btn btn-link mclink" %></td>
           <% end %>
         </tr>
       <% end %>
