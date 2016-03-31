@@ -2,7 +2,7 @@ class ReportsController < ApplicationController
 	before_action :require_user
 	def select
 		if current_user.admin?
-			@users = User.all.where("role == 'employee'").order("Firstname ASC")
+			@users = User.all.where("role = 'employee'").order("Firstname ASC")
       @client = Client.all
 		else
 		end
