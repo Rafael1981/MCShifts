@@ -12,7 +12,7 @@ class ClientsController < ApplicationController
 
     respond_to do |format|
       if @client.save
-        format.html { redirect_to @client, notice: 'Client was successfully created.' }
+        format.html { redirect_to clients_path, notice: 'Client was successfully created.' }
         format.json { render :show, status: :created, location: @client }
       else
         format.html { render :new }
@@ -52,7 +52,7 @@ class ClientsController < ApplicationController
     if Client.find_by id: params[:id]
       @client = Client.find_by id: params[:id]
     else
-      redirect_to '/clients',notice:'Client was not found.'
+      redirect_to clients_path,notice:'Client was not found.'
     end
 
   end

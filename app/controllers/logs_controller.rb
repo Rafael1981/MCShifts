@@ -34,13 +34,13 @@ class LogsController < ApplicationController
 
   def root
     if current_user.admin?
-      redirect_to '/logs'
+      redirect_to logs_path
     else
       cnt = Log.where(user: current_user).where("logs.Signin = logs.Signout").count
       if cnt == 0
-        redirect_to '/signin'
+        redirect_to signin_path
       else
-        redirect_to '/signout'
+        redirect_to signout_path
       end
     end
   end
@@ -48,14 +48,14 @@ class LogsController < ApplicationController
   # GET /signin
   def signin
     if current_user.admin?
-      redirect_to '/logs'
+      redirect_to logs_path
     else
       cnt = Log.where(user: current_user).where("signin = signout").count
       if cnt == 0
         @log = Log.new
         @places = Place.all
       else
-        redirect_to '/signout'
+        redirect_to signout_path
       end
     end
   end
@@ -64,13 +64,13 @@ class LogsController < ApplicationController
   # GET /signout
   def signout
     if current_user.admin?
-      redirect_to '/logs'
+      redirect_to logs_path
     else
       cnt = Log.where(user: current_user).where("signin = signout").count
       if cnt > 0
         @log = Log.where(user: current_user).where("signin = signout").order("id DESC").first
       else
-        redirect_to '/signin'
+        redirect_to signin_path
       end
     end
   end
@@ -87,7 +87,7 @@ class LogsController < ApplicationController
       cnt = Log.where(user: current_user).where("signin = signout").count
       if cnt == 0
         if @log.save
-          format.html { redirect_to '/signout', notice: 'Sign In Successfull.' }
+          format.html { redirect_to signout_path, notice: 'Sign In Successfull.' }
           format.json { render :create_signout, status: :created, location: @log }
           sms(current_user,@log,0)
           UserMailer.log_email(@log, current_user).deliver
@@ -96,7 +96,7 @@ class LogsController < ApplicationController
           format.json { render json: @log.errors, status: :unprocessable_entity }
         end
       else
-        format.html {redirect_to '/logs', :flash => {error: 'Sign out of it before Singing in again.'} }
+        format.html {redirect_to logs_path, :flash => {error: 'Sign out of it before Singing in again.'} }
         format.json { render json: @log.errors, status: :unprocessable_entity }
       end
     end
@@ -109,7 +109,7 @@ class LogsController < ApplicationController
       respond_to do |format|
         if @log.signin == @log.signout
           if @log.update(log_params)
-            format.html { redirect_to '/logs', notice: 'Sign Out successfull.' }
+            format.html { redirect_to logs_path, notice: 'Sign Out successfull.' }
             format.json { render :show, status: :ok, location: @log }
             sms(current_user,@log,2)
             UserMailer.log_email(@log, current_user).deliver
@@ -119,14 +119,14 @@ class LogsController < ApplicationController
             format.json { render json: @log.errors, status: :unprocessable_entity }
           end
         else
-          format.html {redirect_to '/logs', :flash => { :error => "This shift is already closed." } }
+          format.html {redirect_to logs_path, :flash => { :error => "This shift is already closed." } }
           format.json { render json: @log.errors, status: :unprocessable_entity }
         end
     end
   end
   # GET /logs/1
   def show
-    redirect_to '/logs'
+    redirect_to logs_path
   end
 
   # GET /logs/new
@@ -142,7 +142,7 @@ class LogsController < ApplicationController
   def edit
     @log = set_log
     unless (@log.signin != @log.signout) && ((Time.parse(@log.created_at.to_s).strftime('%d/%m/%Y')) > (Time.parse((DateTime.now - 2).to_s).strftime('%d/%m/%Y')))
-      redirect_to '/logs'
+      redirect_to logs_path
     end
   end
 
@@ -156,7 +156,7 @@ class LogsController < ApplicationController
 
     respond_to do |format|
       if @log.save
-        format.html { redirect_to '/logs', notice: 'Record was successfully created.' }
+        format.html { redirect_to logs_path, notice: 'Record was successfully created.' }
         format.json { render :index, status: :created, location: @log }
         # UserMailer.log_email(@log, '1', current_user).deliver
       else
@@ -171,7 +171,7 @@ class LogsController < ApplicationController
   def update
     respond_to do |format|
       if @log.update(log_params)
-        format.html { redirect_to '/logs', notice: 'Record was successfully updated.' }
+        format.html { redirect_to logs_path, notice: 'Record was successfully updated.' }
         format.json { render :index, status: :ok, location: @log }
         UserMailer.log_email(@log, current_user).deliver
 
@@ -195,12 +195,11 @@ class LogsController < ApplicationController
   private
     # Use callbacks to share common setup or constraints between actions.
     def set_log
-    #  @log = Log.find(params[:id])
 
       if Log.find_by id: params[:id]
         @log = Log.find_by id: params[:id]
       else
-        redirect_to '/logs',notice:'Log was not found.'
+        redirect_to logs_path,notice:'Log was not found.'
       end
 
     end

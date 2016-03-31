@@ -1,9 +1,9 @@
 class UsersController < ApplicationController
 	before_action :require_admin, only: [:new, :create, :edit, :update, :index, :show]
+	before_action :set_user, only: [:edit, :update, :show, :password]
   before_action :require_user
   # GET /users/1
   def show
-  	 @user = User.find(params[:id])
   end
 
   # GET /users
@@ -21,7 +21,7 @@ class UsersController < ApplicationController
 		@user = User.new(user_params)
 		if @user.save
       # Tell the UserMailer to send a welcome email after save
-     	redirect_to '/users'
+     	redirect_to users_path
 			# UserMailer.welcome_email(@user).deliver
 		else
 			format.html { render :new }
@@ -30,19 +30,14 @@ class UsersController < ApplicationController
 	end
 
 	def edit
-    @user = User.find(params[:id])
-
 	end
 
 	def password
-  	 @user = User.find(params[:id])
 	end
 
   # PATCH/PUT /users/1
   # PATCH/PUT /users/1.json
   def update
-  	@user = User.find(params[:id])
-  	
     respond_to do |format|
       if @user.update(user_params)
         format.html { redirect_to users_path, notice: 'User was successfully updated.' }
@@ -55,6 +50,14 @@ class UsersController < ApplicationController
   end
 
 	private
+	def set_user
+		if User.find_by id: params[:id]
+			@user = User.find_by id: params[:id]
+		else
+			redirect_to users_path,notice:'User was not found.'
+		end
+	end
+
 	def user_params
 		params.require(:user).permit(:firstname, :middlename, :lastname, :email, :password, :mobile, :active)
 	end

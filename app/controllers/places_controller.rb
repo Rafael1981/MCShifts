@@ -30,8 +30,8 @@ class PlacesController < ApplicationController
 
     respond_to do |format|
       if @place.save
-        format.html { redirect_to @place, notice: 'Place was successfully created.' }
-        format.json { render :show, status: :created, location: @place }
+        format.html { redirect_to places_path, notice: 'Place was successfully created.' }
+        format.json { render :index, status: :created, location: @place }
       else
         format.html { render :new }
         format.json { render json: @place.errors, status: :unprocessable_entity }
@@ -45,8 +45,8 @@ class PlacesController < ApplicationController
     @place.client_id = params[:place][:client_id]
     respond_to do |format|
       if @place.update(place_params)
-        format.html { redirect_to @place, notice: 'Place was successfully updated.' }
-        format.json { render :show, status: :ok, location: @place }
+        format.html { redirect_to places_path, notice: 'Place was successfully updated.' }
+        format.json { render :index, status: :ok, location: @place }
       else
         format.html { render :edit }
         format.json { render json: @place.errors, status: :unprocessable_entity }
@@ -58,7 +58,11 @@ class PlacesController < ApplicationController
   private
     # Use callbacks to share common setup or constraints between actions.
     def set_place
-      @place = Place.find(params[:id])
+      if Place.find_by id: params[:id]
+        @place = Place.find_by id: params[:id]
+      else
+        redirect_to places_path,notice:'Place was not found.'
+      end
     end
 
     # Never trust parameters from the scary internet, only allow the white list through.
