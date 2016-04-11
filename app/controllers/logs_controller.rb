@@ -152,7 +152,7 @@ class LogsController < ApplicationController
     ##only admins are allowed to update sign in/out times
   def edit
     @log = set_log
-    unless (@log.signin != @log.signout) && ((Time.parse(@log.created_at.to_s).strftime('%d/%m/%Y')) > (Time.parse((DateTime.now).to_s).strftime('%d/%m/%Y'))) && current_user.admin?
+    unless current_user.admin?
       redirect_to logs_path
     end
   end
