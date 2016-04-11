@@ -27,6 +27,7 @@ class LogsController < ApplicationController
     end
     @logs = @logs.paginate(:page => params[:page], :per_page => 5)
 
+
   end
 
 
@@ -52,8 +53,12 @@ class LogsController < ApplicationController
     else
       cnt = Log.where(user: current_user).where("signin = signout").count
       if cnt == 0
-        @log = Log.new
-        @places = Place.all
+        if shifts_today < 2
+          @log = Log.new
+          @places = Place.all
+        else
+          redirect_to logs_path
+        end
       else
         redirect_to signout_path
       end
@@ -86,13 +91,18 @@ class LogsController < ApplicationController
     respond_to do |format|
       cnt = Log.where(user: current_user).where("signin = signout").count
       if cnt == 0
-        if @log.save
-          format.html { redirect_to signout_path, notice: 'Sign In Successfull.' }
-          format.json { render :create_signout, status: :created, location: @log }
-          sms(current_user,@log,0)
-          UserMailer.log_email(@log, current_user).deliver
+        if shifts_today < 2
+          if @log.save
+            format.html { redirect_to signout_path, notice: 'Sign In Successfull.' }
+            format.json { render :create_signout, status: :created, location: @log }
+            sms(current_user,@log,0)
+            UserMailer.log_email(@log, current_user).deliver
+          else
+            format.html { render :signin }
+            format.json { render json: @log.errors, status: :unprocessable_entity }
+          end
         else
-          format.html { render :signin }
+          format.html {redirect_to logs_path, :flash => {error: 'No more than 2 shifts allowed in a day.'} }
           format.json { render json: @log.errors, status: :unprocessable_entity }
         end
       else
@@ -139,9 +149,10 @@ class LogsController < ApplicationController
   end
 
   # GET /logs/1/edit
+    ##only admins are allowed to update sign in/out times
   def edit
     @log = set_log
-    unless (@log.signin != @log.signout) && ((Time.parse(@log.created_at.to_s).strftime('%d/%m/%Y')) > (Time.parse((DateTime.now - 2).to_s).strftime('%d/%m/%Y')))
+    unless (@log.signin != @log.signout) && ((Time.parse(@log.created_at.to_s).strftime('%d/%m/%Y')) > (Time.parse((DateTime.now).to_s).strftime('%d/%m/%Y'))) && current_user.admin?
       redirect_to logs_path
     end
   end
@@ -168,18 +179,22 @@ class LogsController < ApplicationController
 
   # PATCH/PUT /logs/1
   # PATCH/PUT /logs/1.json
-  def update
-    respond_to do |format|
-      if @log.update(log_params)
-        format.html { redirect_to logs_path, notice: 'Record was successfully updated.' }
-        format.json { render :index, status: :ok, location: @log }
-        UserMailer.log_email(@log, current_user).deliver
+  def update  ##only admins are allowed to update sign in/out times
+    if (current_user.admin?) ##|| (@log.signin.strftime("%Y-%m-%d") == DateTime.now.strftime("%Y-%m-%d"))
+      respond_to do |format|
+        if @log.update(log_params)
+          format.html { redirect_to logs_path, notice: 'Record was successfully updated.' }
+          format.json { render :index, status: :ok, location: @log }
+          UserMailer.log_email(@log, current_user).deliver
 
-      else
-        format.html { render :edit }
-        format.json { render json: @log.errors, status: :unprocessable_entity }
+        else
+          format.html { render :edit }
+          format.json { render json: @log.errors, status: :unprocessable_entity }
+        end
       end
+    else
     end
+
   end
 
   # DELETE /logs/1
@@ -208,4 +223,10 @@ class LogsController < ApplicationController
     def log_params
       params.require(:log).permit(:signin, :signout)
     end
+
+    def shifts_today
+      cnt2 = Log.where(user: current_user).where("signin <> signout and  DATE(signin) = DATE(:today)",  {today: DateTime.now.strftime("%Y-%m-%d")}).count
+      return cnt2
+    end
+
 end

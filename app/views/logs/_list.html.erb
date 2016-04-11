@@ -17,7 +17,10 @@
           Place
         </th>
         <th>
-          <% if current_user.admin? %>Total <% else %> Action <% end %>
+          Total
+        </th>
+        <th>
+          Action
         </th>
     </thead>
     <tbody>
@@ -35,18 +38,20 @@
               mm, ss = wrktime.divmod(60)            
               hh, mm = mm.divmod(60)%>
           <td class="col-md-1">
+            <%=  hh.to_s.rjust(2, '0') %>:<%= mm.to_s.rjust(2, '0') %>
+          </td>
+          <td class="col-md-1">
             <% if current_user.admin? %>
-                <%=  hh.to_s.rjust(2, '0') %>:<%= mm.to_s.rjust(2, '0') %>
+              <%= link_to 'Edit', edit_log_path(log), class: "btn btn-link mclink" %>
+
             <% else %>
-                <% if (Time.parse(log.created_at.to_s).strftime('%d/%m/%Y')) >= (Time.parse((DateTime.now - 2).to_s).strftime('%d/%m/%Y')) %>
-                    <% if log.signin != log.signout  %>
-                        <%= link_to 'Edit', edit_log_path(log), class: "btn btn-link mclink" %>
-                    <% else %>
-                        <%= link_to 'Sign Out', signout_path, class: "btn btn-link mclink" %>
-                    <% end %>
+
+                <%## if (Time.parse(log.created_at.to_s).strftime('%d/%m/%Y')) >= (Time.parse((DateTime.now - 2).to_s).strftime('%d/%m/%Y')) %>
+                <% if log.signin == log.signout  %>
+                    <%= link_to 'Sign Out', signout_path, class: "btn btn-link mclink" %>
                 <% else %>
-                    <%="Period Closed"%>
-                <% end %>
+                  <%="Period Closed"%>
+               <% end %>
             <% end %>
 
           </td>
