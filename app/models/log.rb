@@ -6,5 +6,8 @@ class Log < ActiveRecord::Base
  # validates_presence_of :Signin
  # validates_presence_of :Signout
 
+	def defaults
+		self.bonus = 0 if self.role.nil?
+	end
 
 end

@@ -15,7 +15,7 @@
   <div class="row">
     <div class='col-md-3'>
       <div class="form-group">
-        <%= f.label :Place %><br>
+        <%= label_tag "Place:" %><br>
         <div class='input-group' id='place'>
           <%= select("post", "place_id", Place.all.collect {|p| [ p.name, p.id ] }, {}, class: "form-control")%>
         </div>
@@ -84,8 +84,18 @@
             });
         </script>
     </div>
+    <div class="row">
+      <div class='col-md-3'>
+        <div class="form-group">
+          <%= label_tag "Bonus:"%><br>
+          <div class='input-group' id='place'>
+            <%= f.number_field :bonus, class: "form-control", :value=> f.object.bonus %>
+          </div>
+        </div>
+      </div>
+    </div>
 
-  <div class="actions">
-    <%= f.submit 'Update', class: "btn btn-primary btn-danger"%>
-  </div>
+    <div class="actions">
+      <%= f.submit 'Update', class: "btn btn-primary btn-danger"%>
+    </div>
 <% end %>

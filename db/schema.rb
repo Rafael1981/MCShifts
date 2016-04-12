@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20160123121527) do
+ActiveRecord::Schema.define(version: 20160411220620) do
 
   create_table "clients", force: true do |t|
     t.string   "name"
@@ -26,6 +26,7 @@ ActiveRecord::Schema.define(version: 20160123121527) do
     t.datetime "updated_at"
     t.integer  "user_id"
     t.integer  "place_id"
+    t.time     "bonus"
   end
 
   add_index "logs", ["place_id"], name: "index_logs_on_place_id"
