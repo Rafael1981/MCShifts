@@ -88,8 +88,10 @@
       <div class='col-md-3'>
         <div class="form-group">
           <%= label_tag "Bonus:"%><br>
-          <div class='input-group' id='place'>
-            <%= f.number_field :bonus, class: "form-control", :value=> f.object.bonus %>
+          <div class='input-group' id='bonus'>
+            <%= f.number_field :bonus, class: "form-control", :value=> Time.parse(f.object.bonus.to_s).strftime('%H') %>
+
+
           </div>
         </div>
       </div>

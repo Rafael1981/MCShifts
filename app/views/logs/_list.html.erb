@@ -17,6 +17,9 @@
           Place
         </th>
         <th>
+          Bonus
+        </th>
+        <th>
           Total
         </th>
         <th>
@@ -33,7 +36,12 @@
           <td class="col-md-1"><%= Time.parse(log.signin.to_s).strftime('%d/%m/%Y %H:%M') %></td>
           <td class="col-md-1"><%= Time.parse(log.signout.to_s).strftime('%d/%m/%Y %H:%M') %></td>
           <td class="col-md-1"><%= log.place.name %></td>
+          <td class="col-md-1">
+          <% if log.bonus  %><%= Time.parse(log.bonus.to_s).strftime('%H:%M') %>
+          <% else %><%= Time.parse("0:00").strftime('%H:%M') %>
 
+          <% end %>
+          </td>
           <%  wrktime = log.signout.to_i - log.signin.to_i
               mm, ss = wrktime.divmod(60)            
               hh, mm = mm.divmod(60)%>

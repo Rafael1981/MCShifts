@@ -221,7 +221,7 @@ class LogsController < ApplicationController
 
     # Never trust parameters from the scary internet, only allow the white list through.
     def log_params
-      params.require(:log).permit(:signin, :signout)
+      params.require(:log).permit(:signin, :signout, :bonus)
     end
 
     def shifts_today
