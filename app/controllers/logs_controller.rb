@@ -87,6 +87,7 @@ class LogsController < ApplicationController
     @log.signout = @log.signin
     @log.user_id = current_user.id
     @log.place_id = params[:post][:place_id]
+    @log.bonus = Time.parse("00:00")
 
     respond_to do |format|
       cnt = Log.where(user: current_user).where("signin = signout").count
