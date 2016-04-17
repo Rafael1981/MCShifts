@@ -19,13 +19,15 @@ class UsersController < ApplicationController
 
 	def create
 		@user = User.new(user_params)
-		if @user.save
+		respond_to do |format|
+		if (User.where("email = :email" , { email: user_params[:email]}).count <= 0) && @user.save
       # Tell the UserMailer to send a welcome email after save
-     	redirect_to users_path
+			format.html { redirect_to users_path , notice: 'User was successfully created.' }
 			# UserMailer.welcome_email(@user).deliver
 		else
-			format.html { render :new }
-			format.json { render json: @log.errors, status: :unprocessable_entity }
+			format.html { redirect_to users_path, :flash => { :error => "This email is already in use." }  }
+			format.json { render json: @user.errors, status: :unprocessable_entity }
+			end
 		end
 	end
 
