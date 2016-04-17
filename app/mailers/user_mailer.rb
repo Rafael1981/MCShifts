@@ -3,14 +3,14 @@ class UserMailer < ActionMailer::Base
 
    def welcome_email(user)
     @user = user
-    mail(:to => ["mailstestruby@gmail.com", @user.email], subject: 'Welcome to MCShifts')
+    mail(:to => ["mcshifts2016@gmail.com", @user.email], subject: 'Welcome to MCShifts')
   end
 
   def log_email(log, user)
     @log = log
     @user = user
     email_admins
-    # mail(:to => ["mailstestruby@gmail.com", @user.email], subject: 'New Sign In/Sign Out Information')
+    # mail(:to => ["mcshifts2016@gmail.com", @user.email], subject: 'New Sign In/Sign Out Information')
     mail(:to => @email_list, subject: 'New Sign In/Sign Out Information')
   end
 end
