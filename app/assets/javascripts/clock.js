@@ -6,7 +6,7 @@ function startTime() {
     var h = today.format("HH");
     var m = today.format("mm");
     if (m > 0  && m < 15)
-    { m = 0;}
+    { m = "00";}
     else if (m > 15  && m < 30)
     { m = 15;}
     else if (m > 30  && m < 45)
