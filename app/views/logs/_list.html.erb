@@ -17,13 +17,10 @@
           Place
         </th>
         <th>
-          Raw Total
+          Total
         </th>
         <th>
-          Rounded Total
-        </th>
-        <th>
-          Bonus
+          Additional Hours
         </th>
         <th>
           Action
@@ -48,25 +45,6 @@
             <%=  hh.to_s.rjust(2, '0') %>:<%= mm.to_s.rjust(2, '0') %>
           </td>
 
-          <td class="col-md-1">
-            <%
-              if qq >= 7.5
-                mm = mm + (15 - qq)
-                if mm >= 60
-                  hh = hh + 1
-                  mm = mm - 60
-                end
-              else
-                if mm >= qq
-                  mm = mm - qq
-                else
-                  hh = hh - 1
-                  mm = 60 - qq
-                end
-              end
-            %>
-            <%=  hh.to_s.rjust(2, '0') %>:<%= mm.to_s.rjust(2, '0') %>
-          </td>
           <td class="col-md-1">
             <% if log.bonus  %><%= Time.parse(log.bonus.to_s).strftime('%H:%M') %>
                 <% else %><%= Time.parse("0:00").strftime('%H:%M') %>

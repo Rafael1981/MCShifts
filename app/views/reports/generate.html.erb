@@ -26,24 +26,19 @@
             Place
           </th>
           <th>
-            Bonus
+            Additional Hours
           </th>
           <th>
-            Raw Total
-          </th>
-          <th>
-            Round hours
+            Worked Hours
           </th>
       </thead>
       <tbody>
 
       <% total = 0  #raw total
-         totalr = 0 #round total
          totalb = 0 #total with bonus time
       %>
         <% @logs.each do |log| %>
-          <% wrktime = 0
-             wrktimer = 0%>
+          <% wrktime = 0%>
           <tr>
             <% if current_user.admin? %>
               <td class="col-md-2"><%= log.user.firstname+" "+log.user.lastname %></td>
@@ -60,45 +55,18 @@
 
             <td class="col-md-2"><%=  hh.to_s.rjust(2, '0') %>:<%= mm.to_s.rjust(2, '0') %></td>
 
-            <%
-              hhr = hh
-              mmr = mm
-              rr,qq = mmr.divmod(15) #qq is used to calculate the rounded values
-              if qq >= 7.5
-                mmr = mmr + (15 - qq)
-                if mmr >= 60
-                  hhr = hhr + 1
-                  mmr = mmr - 60
-                end
-              else
-                if mmr >= qq
-                  mmr = mmr - qq
-                else
-                  hhr = hhr - 1
-                  mmr = 60 - qq
-                end
-              end
-              wrktimer = hhr*3600 + mmr*60
-            %>
-
-            <td class="col-md-2"><%=  hhr.to_s.rjust(2, '0') %>:<%= mmr.to_s.rjust(2, '0') %></td>
           </tr>
           <% total = total + wrktime
-             totalb = totalb + hhb
-             totalr = totalr + wrktimer%>
+             totalb = totalb + hhb%>
         <% end %>
         <% mm, ss = total.divmod(60)            
            hh, mm = mm.divmod(60)
           hh = hh + totalb
         %>
         <tr>
-          <th colspan=<% if current_user.admin? %> <%= "5" %><% else %><%= "4" %><%end%> align="right">Total hours for the period:</th>
+          <th colspan="4" align="right">Total hours for the period:</th>
           <td><%= hh.to_s.rjust(2, '0') %>:<%= mm.to_s.rjust(2, '0') %></td>
-          <% mmr, ss = totalr.divmod(60)
-             hhr, mmr = mmr.divmod(60)
-             hhr = hhr + totalb
-          %>
-          <td><%= hhr.to_s.rjust(2, '0') %>:<%= mmr.to_s.rjust(2, '0') %></td>
+
         </tr>
       </tbody>
     </table>
