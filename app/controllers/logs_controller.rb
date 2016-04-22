@@ -186,7 +186,7 @@ class LogsController < ApplicationController
         if @log.update(log_params)
           format.html { redirect_to logs_path, notice: 'Record was successfully updated.' }
           format.json { render :index, status: :ok, location: @log }
-          UserMailer.log_email(@log, current_user).deliver
+     #     UserMailer.log_email(@log, current_user).deliver
 
         else
           format.html { render :edit }
