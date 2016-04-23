@@ -6,7 +6,7 @@
   <body>
 </p>
     <h3>Hello, <%= @user.firstname %>
-      <% if @log.signout ==x @log.signin %> Signed In at <%= Time.parse(@log.signin.to_s).strftime('%d/%m/%Y %H:%M') %>.
+      <% if @log.signout == @log.signin %> Signed In at <%= Time.parse(@log.signin.to_s).strftime('%d/%m/%Y %H:%M') %>.
       <% else %>   Signed out at <%= Time.parse(@log.signout.to_s).strftime('%d/%m/%Y %H:%M') %>.
       <% end %></h3>
   </body>
