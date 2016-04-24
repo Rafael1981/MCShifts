@@ -15,13 +15,13 @@ class LogsController < ApplicationController
       # else
       #  @logs = Log.where(user: current_user).order("created_at DESC")
       # end
-      @logs = Log.where(user: current_user).order("created_at DESC")
+      @logs = Log.where(user: current_user).order("signin DESC")
     else
       cnt = Log.where("user_id>0").count
       if cnt >= 7
-        @logs = Log.where("user_id>0").limit(7).order("created_at DESC")
+        @logs = Log.where("user_id>0").limit(7).order("signin DESC")
       else
-        @logs = Log.where("user_id>0").order("created_at DESC")
+        @logs = Log.where("user_id>0").order("signin DESC")
       end
 
     end
