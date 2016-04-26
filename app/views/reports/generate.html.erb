@@ -64,7 +64,7 @@
           hh = hh + totalb
         %>
         <tr>
-          <th colspan="4" align="right">Total hours for the period:</th>
+          <th colspan=<% if current_user.admin? %><%="5"%><% else %><%="4"%><%end%> align="right">Total hours for the period:</th>
           <td><%= hh.to_s.rjust(2, '0') %>:<%= mm.to_s.rjust(2, '0') %></td>
 
         </tr>
