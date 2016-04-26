@@ -34,7 +34,7 @@
             <td class="col-md-1"><%= log.user.firstname+" "+log.user.lastname %></td>
           <% end %>
           <td class="col-md-1"><%= Time.parse(log.signin.to_s).strftime('%d/%m/%Y %H:%M') %></td>
-          <td class="col-md-1"><%= Time.parse(log.signout.to_s).strftime('%d/%m/%Y %H:%M') %></td>
+          <td class="col-md-1"><% if log.signin != log.signout %><%= Time.parse(log.signout.to_s).strftime('%d/%m/%Y %H:%M') %><% else %><%="Active Shift"%> <% end %> </td>
           <td class="col-md-1"><%= log.place.name %></td>
           <%  wrktime = log.signout.to_i - log.signin.to_i
               mm, ss = wrktime.divmod(60)            
