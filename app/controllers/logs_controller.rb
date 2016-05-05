@@ -183,6 +183,7 @@ class LogsController < ApplicationController
   def update  ##only admins are allowed to update sign in/out times
     if (current_user.admin?) ##|| (@log.signin.strftime("%Y-%m-%d") == DateTime.now.strftime("%Y-%m-%d"))
       respond_to do |format|
+        @log.place_id = params[:post][:place_id]
         if @log.update(log_params)
           format.html { redirect_to logs_path, notice: 'Record was successfully updated.' }
           format.json { render :index, status: :ok, location: @log }
