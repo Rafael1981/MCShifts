@@ -6,11 +6,21 @@
     <div class='col-md-3'>
       <div class="form-group">
         <div class='input-group' id='user'>
-          <%= select("post", "person_id", @users.collect {|p| [ p.firstname+" "+p.lastname, p.id ] }, { include_blank: "All Employees"}, class: "form-control")%>
+          <%= select("post", "person_id", @users.collect {|p| [ p.firstname+" "+p.lastname, p.id ] }, { include_blank: "All Employees" },{ class: "form-control", onchange: "rep_det_sum()"})%>
         </div>
       </div>
     </div>
   </div>
+  <div id="sum_det" class="row">
+    <div class='col-md-3'>
+      <div class="form-group">
+        <div class='input-group' id='typereport'>
+        <%= select("post","typerep", %w[Summarised Detailed], {},class:"form-control") %>
+          </div>
+      </div>
+    </div>
+  </div>
+
   <div class="row">
     <div class='col-md-3'>
       <div class="form-group">
@@ -27,7 +37,7 @@
     <div class='col-md-3'>
       <div class="form-group">
         <div class='input-group date' id='mindate'>
-          <%= text_field_tag 'mindate',(Time.now - 14.days).strftime('%d/%m/%Y %H:%M'), class: "form-control"%>
+          <%= text_field_tag 'mindate',(Time.now - 14.days + 14.hours).strftime('%d/%m/%Y %H:%M'), class: "form-control"%>
           <span class="input-group-addon">
             <span class="glyphicon glyphicon-calendar"></span>
           </span>
@@ -39,7 +49,7 @@
     <div class='col-md-3'>
       <div class="form-group">
         <div class='input-group date' id='maxdate'>
-          <%= text_field_tag 'maxdate',Time.now.strftime('%d/%m/%Y %H:%M'), class: "form-control"%>
+          <%= text_field_tag 'maxdate',(Time.now - 1.day + 14.hours).strftime('%d/%m/%Y %H:%M'), class: "form-control"%>
           <span class="input-group-addon">
             <span class="glyphicon glyphicon-calendar"></span>
           </span>

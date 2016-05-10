@@ -12,9 +12,9 @@ class ReportsController < ApplicationController
 	def generate
 
 		@mindate = params[:mindate]
-		@mindate = (Time.parse(@mindate) + 10.hours).strftime('%d/%m/%Y %H:%M')
+		@mindate = (Time.parse(@mindate)).strftime('%d/%m/%Y %H:%M')
 		@maxdate = params[:maxdate]
-		@maxdate = (Time.parse(@maxdate) + 10.hours).strftime('%d/%m/%Y %H:%M')
+		@maxdate = (Time.parse(@maxdate)).strftime('%d/%m/%Y %H:%M')
 		if current_user.admin?
 			if params[:post][:person_id].present?
 				@userselected = User.find(params[:post][:person_id])
