@@ -53,7 +53,7 @@ class LogsController < ApplicationController
     else
       cnt = Log.where(user: current_user).where("signin = signout").count
       if cnt == 0
-        if shifts_today < 2
+        if shifts_today <=  3
           @log = Log.new
           @places = Place.all
         else
