@@ -39,7 +39,7 @@ class ReportsController < ApplicationController
 				end
 
 			end
-			if @clientselected.present? && @typerep == "Detailed"
+			if @clientselected.present? && (@typerep == "Detailed" || @userselected.present? )
 				@clientname = Client.find(@clientselected).name
 				@logs = @logs.joins(:place).where("places.client_id = ?", @clientselected)
 			else

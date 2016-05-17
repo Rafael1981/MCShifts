@@ -3,14 +3,12 @@
   <p>To: <%= Time.parse(@maxdate.to_s).strftime('%d/%m/%Y')%><p/>
 <% if current_user.admin? %>
   <p>Employee: <% if @userselected.present? %> <%=  @userselected.firstname+" "+ @userselected.lastname %><% else %>All Employees <% end %><p/>
-  <p>Client:<% if @clientname.present? %> <%= @clientname %><p/>
-        <%if @userselected.present?%>
-            <%= render 'detailed' %>
-        <% else if  @typerep != "Detailed" %>
-            <%= render 'summarised' %>
-                <% end %>
-        <% end %>
+  <p>Client: <% if @clientname.present? %> <%= @clientname %><p/>
     <% else %>All Clients<p/>
+    <% end %>
+      <%if @userselected.present?%>
+          <%= render 'detailed' %>
+      <% else %>
 
         <%if @typerep == "Detailed" %>
             <%= render 'detailed' %>
