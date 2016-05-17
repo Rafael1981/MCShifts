@@ -16,7 +16,7 @@ class ReportsController < ApplicationController
 		@maxdate = params[:maxdate]
 		@maxdate = (Time.parse(@maxdate)).strftime('%d/%m/%Y')
 		@typerep = params[:post][:typerep]
-		@typeclient = params[:post][:client_id]
+    @clientselected = params[:post][:client_id]
 		if current_user.admin?
 			if params[:post][:person_id].present?
 				@userselected = User.find(params[:post][:person_id])
@@ -39,13 +39,12 @@ class ReportsController < ApplicationController
 				end
 
 			end
-			if @typeclient.present? && @typerep == "Detailed"
+			if @clientselected.present? && @typerep == "Detailed"
 				@clientname = Client.find(params[:post][:client_id]).name
-				@clientselected = params[:post][:client_id]
 				@logs = @logs.joins(:place).where("places.client_id = ?", @clientselected)
 			else
-				if @typeclient.present?
-					@logs =  Log.joins(:user).where("Signin  BETWEEN :start_date AND :end_date",  {start_date: Time.parse(@mindate), end_date: Time.parse(@maxdate)}).joins(:place).where("places.client_id = ?", @clientselected).select("firstname||' '||lastname as name, sum(signout - signin) as wrkhrs, sum(bonus) as additional, sum(signout-signin + bonus) as total").group("firstname ||' '|| lastname")
+				if @clientselected.present?
+					@logs =  Log.joins(:place).where("places.client_id = ?", @clientselected).joins(:user).where("Signin  BETWEEN :start_date AND :end_date",  {start_date: Time.parse(@mindate), end_date: Time.parse(@maxdate)}).select("firstname||' '||lastname as name, sum(signout - signin) as wrkhrs, sum(bonus) as additional, sum(signout-signin + bonus) as total").group("firstname ||' '|| lastname")
 						@totalall = nil
 					@logs.each do |l1|
 						if @totalall.nil?
