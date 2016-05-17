@@ -16,6 +16,7 @@ class ReportsController < ApplicationController
 		@maxdate = params[:maxdate]
 		@maxdate = (Time.parse(@maxdate)).strftime('%d/%m/%Y')
 		@typerep = params[:post][:typerep]
+		@typeclient = params[:post][:client_id]
 		if current_user.admin?
 			if params[:post][:person_id].present?
 				@userselected = User.find(params[:post][:person_id])
@@ -25,10 +26,9 @@ class ReportsController < ApplicationController
 					@logs = Log.where("Signin  BETWEEN :start_date AND :end_date",  {start_date: Time.parse(@mindate), end_date: Time.parse(@maxdate)}).order("Signin DESC")
 				else
 					@logs =  Log.joins(:user).where("Signin  BETWEEN :start_date AND :end_date",  {start_date: Time.parse(@mindate), end_date: Time.parse(@maxdate)}).select("firstname||' '||lastname as name, sum(signout - signin) as wrkhrs, sum(bonus) as additional, sum(signout-signin + bonus) as total").group("firstname ||' '|| lastname")
-				# Log.joins(:user).select("firstname||' '||lastname as name, sum(signout - signin) as wrkhrs, sum(bonus) as additional").group("firstname ||' '|| lastname"
-					@totalall = nil
 
-					@logs.each do |l1|
+						@totalall = nil
+						@logs.each do |l1|
 						if @totalall.nil?
 							@totalall = l1.total
 						else
@@ -39,10 +39,22 @@ class ReportsController < ApplicationController
 				end
 
 			end
-			if params[:post][:client_id].present?
+			if @typeclient.present? && @typerep == "Detailed"
 				@clientname = Client.find(params[:post][:client_id]).name
 				@clientselected = params[:post][:client_id]
 				@logs = @logs.joins(:place).where("places.client_id = ?", @clientselected)
+			else
+				if @typeclient.present?
+					@logs =  Log.joins(:user).where("Signin  BETWEEN :start_date AND :end_date",  {start_date: Time.parse(@mindate), end_date: Time.parse(@maxdate)}).joins(:place).where("places.client_id = ?", @clientselected).select("firstname||' '||lastname as name, sum(signout - signin) as wrkhrs, sum(bonus) as additional, sum(signout-signin + bonus) as total").group("firstname ||' '|| lastname")
+						@totalall = nil
+					@logs.each do |l1|
+						if @totalall.nil?
+							@totalall = l1.total
+						else
+							@totalall +=  l1.total
+						end
+					end
+				end
 			end
 		else
 			@logs = Log.where(user: current_user).where("Signin  BETWEEN :start_date AND :end_date",  {start_date: Time.parse(@mindate), end_date: Time.parse(@maxdate)}).order("Signin DESC")
