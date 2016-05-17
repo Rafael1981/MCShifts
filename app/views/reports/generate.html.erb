@@ -4,7 +4,7 @@
 <% if current_user.admin? %>
   <p>Employee: <% if @userselected.present? %> <%=  @userselected.firstname+" "+ @userselected.lastname %><% else %>All Employees <% end %><p/>
   <p>Client:<% if @clientname.present? %> <%= @clientname %><p/>
-        <%if @typerep == "Detailed" %>
+        <%if @typerep == "Detailed" || @userselected.present?%>
             <%= render 'detailed' %>
         <% else %>
             <%= render 'summarised' %>
