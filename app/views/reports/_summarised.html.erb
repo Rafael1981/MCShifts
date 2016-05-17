@@ -1,0 +1,43 @@
+<div class="table-responsive">
+  <table class="table table-bordered table-striped">
+    <thead>
+    <tr>
+      <% if current_user.admin? %>
+          <th>
+            Employee
+          </th>
+      <% end %>
+      <th>
+        Worked Hours
+      </th>
+      <th>
+        Additional Hours
+      </th>
+      <th>
+        Total Hours
+      </th>
+    </thead>
+    <tbody>
+
+    <% @logs.each do |log| %>
+        <tr>
+          <% if current_user.admin? %>
+              <td class="col-md-2"><%= log.name %></td>
+          <% end %>
+          <td class="col-md-2"><%= log.wrkhrs  %></td>
+
+          <td class="col-md-2"><%= log.additional  %></td>
+
+          <td class="col-md-2"><%= log.total %></td>
+
+        </tr>
+    <% end %>
+    <tr>
+      <th colspan="3" align="right">Total hours for the period:</th>
+      <td><%= @totalall%></td>
+
+    </tr>
+    </tbody>
+    </tbody>
+  </table>
+</div>

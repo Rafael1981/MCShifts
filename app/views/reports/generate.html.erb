@@ -1,75 +1,23 @@
 <h3>Worked Hours</h3>
-  <p>From: <%= Time.parse(@mindate.to_s).strftime('%d/%m/%Y %H:%M')%><p/>
-  <p>To: <%= Time.parse(@maxdate.to_s).strftime('%d/%m/%Y %H:%M')%><p/>
+  <p>From: <%= Time.parse(@mindate.to_s).strftime('%d/%m/%Y')%><p/>
+  <p>To: <%= Time.parse(@maxdate.to_s).strftime('%d/%m/%Y')%><p/>
 <% if current_user.admin? %>
   <p>Employee: <% if @userselected.present? %> <%=  @userselected.firstname+" "+ @userselected.lastname %><% else %>All Employees <% end %><p/>
-  <p>Client:<% if @clientname.present? %> <%= @clientname %> <% else %>All Clients<% end %><p/>
-  <% end %>
+  <p>Client:<% if @clientname.present? %> <%= @clientname %><p/>
 
+        <%= render 'detailed' %>
+    <% else %>All Clients<p/>
 
-  <div class="table-responsive">
-    <table class="table table-bordered table-striped">
-      <thead>
-        <tr>
-          <% if current_user.admin? %>
-            <th>
-              Employee
-            </th>
-          <% end %>
-          <th>
-            Sign In
-          </th>
-          <th>
-            Sign Out
-          </th>
-          <th>
-            Place
-          </th>
-          <th>
-            Additional Hours
-          </th>
-          <th>
-            Worked Hours
-          </th>
-      </thead>
-      <tbody>
-
-      <% total = 0  #raw total
-         totalb = 0 #total with bonus time
-      %>
-        <% @logs.each do |log| %>
-          <% wrktime = 0%>
-          <tr>
-            <% if current_user.admin? %>
-              <td class="col-md-2"><%= log.user.firstname+" "+log.user.lastname %></td>
-            <% end %>
-            <td class="col-md-2"><%= Time.parse(log.signin.to_s).strftime('%d/%m/%Y %H:%M') %></td>
-            <td class="col-md-2"><%= Time.parse(log.signout.to_s).strftime('%d/%m/%Y %H:%M') %></td>
-            <td class="col-md-2"><%= log.place.name %></td>
-            <td class="col-md-2"><%= Time.parse(log.bonus.to_s).strftime('%H:%M')%></td>
-
-            <%  wrktime = log.signout.to_i - log.signin.to_i
-                mm, ss = wrktime.divmod(60)            
-                hh, mm = mm.divmod(60)
-                hhb = Time.parse(log.bonus.to_s).strftime('%H').to_i%>
-
-            <td class="col-md-2"><%=  hh.to_s.rjust(2, '0') %>:<%= mm.to_s.rjust(2, '0') %></td>
-
-          </tr>
-          <% total = total + wrktime
-             totalb = totalb + hhb%>
+        <%if @typerep == "Detailed" %>
+            <%= render 'detailed' %>
+        <% else %>
+            <%= render 'summarised' %>
         <% end %>
-        <% mm, ss = total.divmod(60)            
-           hh, mm = mm.divmod(60)
-          hh = hh + totalb
-        %>
-        <tr>
-          <th colspan=<% if current_user.admin? %><%="5"%><% else %><%="4"%><%end%> align="right">Total hours for the period:</th>
-          <td><%= hh.to_s.rjust(2, '0') %>:<%= mm.to_s.rjust(2, '0') %></td>
+    <% end %>
+  <% else %>
 
-        </tr>
-      </tbody>
-    </table>
-  </div>
+    <%= render 'detailed' %>
+
+  <% end %>
 
 <%= link_to 'New Report', reports_path, class: "btn btn-link mclink" %>

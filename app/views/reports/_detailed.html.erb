@@ -1,0 +1,64 @@
+<div class="table-responsive">
+  <table class="table table-bordered table-striped">
+    <thead>
+    <tr>
+      <% if current_user.admin? %>
+          <th>
+            Employee
+          </th>
+      <% end %>
+      <th>
+        Sign In
+      </th>
+      <th>
+        Sign Out
+      </th>
+      <th>
+        Place
+      </th>
+      <th>
+        Additional Hours
+      </th>
+      <th>
+        Worked Hours
+      </th>
+    </thead>
+    <tbody>
+
+    <% total = 0  #raw total
+       totalb = 0 #total with bonus time
+    %>
+    <% @logs.each do |log| %>
+        <% wrktime = 0%>
+        <tr>
+          <% if current_user.admin? %>
+              <td class="col-md-2"><%= log.user.firstname+" "+log.user.lastname %></td>
+          <% end %>
+          <td class="col-md-2"><%= Time.parse(log.signin.to_s).strftime('%d/%m/%Y %H:%M') %></td>
+          <td class="col-md-2"><%= Time.parse(log.signout.to_s).strftime('%d/%m/%Y %H:%M') %></td>
+          <td class="col-md-2"><%= log.place.name %></td>
+          <td class="col-md-2"><%= Time.parse(log.bonus.to_s).strftime('%H:%M')%></td>
+
+          <%  wrktime = log.signout.to_i - log.signin.to_i
+              mm, ss = wrktime.divmod(60)
+              hh, mm = mm.divmod(60)
+              hhb = Time.parse(log.bonus.to_s).strftime('%H').to_i%>
+
+          <td class="col-md-2"><%=  hh.to_s.rjust(2, '0') %>:<%= mm.to_s.rjust(2, '0') %></td>
+
+        </tr>
+        <% total = total + wrktime
+           totalb = totalb + hhb%>
+    <% end %>
+    <% mm, ss = total.divmod(60)
+       hh, mm = mm.divmod(60)
+       hh = hh + totalb
+    %>
+    <tr>
+      <th colspan=<% if current_user.admin? %><%="5"%><% else %><%="4"%><%end%> align="right">Total hours for the period:</th>
+      <td><%= hh.to_s.rjust(2, '0') %>:<%= mm.to_s.rjust(2, '0') %></td>
+
+    </tr>
+    </tbody>
+  </table>
+</div>
