@@ -40,11 +40,12 @@ class ReportsController < ApplicationController
 
 			end
 			if @clientselected.present? && @typerep == "Detailed"
-				@clientname = Client.find(params[:post][:client_id]).name
+				@clientname = Client.find(@clientselected).name
 				@logs = @logs.joins(:place).where("places.client_id = ?", @clientselected)
 			else
 				if @clientselected.present?
-					@logs =  Log.joins(:place).where("places.client_id = ?", @clientselected).joins(:user).where("Signin  BETWEEN :start_date AND :end_date",  {start_date: Time.parse(@mindate), end_date: Time.parse(@maxdate)}).select("firstname||' '||lastname as name, sum(signout - signin) as wrkhrs, sum(bonus) as additional, sum(signout-signin + bonus) as total").group("firstname ||' '|| lastname")
+          @clientname = Client.find(@clientselected).name
+					@logs =  Log.joins(:place).where("places.client_id = ?", @clientselected).joins(:user).where("Signin  BETWEEN :start_date AND :end_date",  {start_date: Time.parse(@mindate), end_date: Time.parse(@maxdate)}).select("firstname||' '||lastname as name, places.name as clientname, sum(signout - signin) as wrkhrs, sum(bonus) as additional, sum(signout-signin + bonus) as total").group("firstname ||' '|| lastname, places.name")
 						@totalall = nil
 					@logs.each do |l1|
 						if @totalall.nil?
