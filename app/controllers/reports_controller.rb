@@ -15,9 +15,9 @@ class ReportsController < ApplicationController
 		@mindate = (Time.parse(@mindate)).strftime('%d/%m/%Y')
 		@maxdate = params[:maxdate]
 		@maxdate = (Time.parse(@maxdate)).strftime('%d/%m/%Y')
-		@typerep = params[:post][:typerep]
-    @clientselected = params[:post][:client_id]
 		if current_user.admin?
+			@typerep = params[:post][:typerep]
+			@clientselected = params[:post][:client_id]
 			if params[:post][:person_id].present?
 				@userselected = User.find(params[:post][:person_id])
 				@logs = Log.where(user: @userselected).where("Signin  BETWEEN :start_date AND :end_date",  {start_date: Time.parse(@mindate), end_date: Time.parse(@maxdate)}).order("Signin DESC")
