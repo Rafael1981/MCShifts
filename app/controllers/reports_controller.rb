@@ -15,18 +15,18 @@ class ReportsController < ApplicationController
 		@mindate = (Time.parse(@mindate)).strftime('%d/%m/%Y')
 		@maxdate = params[:maxdate]
 		@maxdate = (Time.parse(@maxdate)+1.day).strftime('%d/%m/%Y')
-		if current_user.admin?
+		if current_user.admin? #reports for admins only
 			@typerep = params[:post][:typerep]
 			@clientselected = params[:post][:client_id]
-			if params[:post][:person_id].present?
+			if params[:post][:person_id].present? # report for an especific employee, which is always detailed
 				@userselected = User.find(params[:post][:person_id])
 				@logs = Log.where(user: @userselected).where("Signin  BETWEEN :start_date AND :end_date",  {start_date: Time.parse(@mindate), end_date: Time.parse(@maxdate)}).order("Signin DESC")
 			else
-				if @typerep == "Detailed"
+				if @typerep == "Detailed"  # report detailed, with all employees
 					@logs = Log.where("Signin  BETWEEN :start_date AND :end_date",  {start_date: Time.parse(@mindate), end_date: Time.parse(@maxdate)}).order("Signin DESC")
-				else
-					@logs =  Log.joins(:user).where("Signin  BETWEEN :start_date AND :end_date",  {start_date: Time.parse(@mindate), end_date: Time.parse(@maxdate)}).select("firstname||' '||lastname as name, sum(signout - signin) as wrkhrs, sum(bonus) as additional, sum(signout-signin + bonus) as total").group("firstname ||' '|| lastname")
-
+				else # summarised report, all employees
+					@logs =  Log.joins(:user).where("Signin  BETWEEN :start_date AND :end_date",  {start_date: Time.parse(@mindate), end_date: Time.parse(@maxdate)}).select("firstname||' '||lastname as name, sum(signout - signin) as wrkhrs, sum(bonus) as additional, sum(signout-signin + bonus) as total").group("firstname ||' '|| lastname").order("firstname ||' '|| lastname")
+						# calculating total hours for summarised report
 						@totalall = nil
 						@logs.each do |l1|
 						if @totalall.nil?
@@ -39,13 +39,13 @@ class ReportsController < ApplicationController
 				end
 
 			end
-			if @clientselected.present? && (@typerep == "Detailed" || @userselected.present? )
+			if @clientselected.present? && (@typerep == "Detailed" || @userselected.present? ) # detailed report for selected user and selected client
 				@clientname = Client.find(@clientselected).name
-				@logs = @logs.joins(:place).where("places.client_id = ?", @clientselected)
+				@logs = @logs.joins(:place).where("places.client_id = ?", @clientselected).order("Signin DESC")
 			else
-				if @clientselected.present?
+				if @clientselected.present? # summarised report for selected client
           @clientname = Client.find(@clientselected).name
-					@logs =  Log.joins(:place).where("places.client_id = ?", @clientselected).joins(:user).where("Signin  BETWEEN :start_date AND :end_date",  {start_date: Time.parse(@mindate), end_date: Time.parse(@maxdate)}).select("firstname||' '||lastname as name, places.client_id as client_id, sum(signout - signin) as wrkhrs, sum(bonus) as additional, sum(signout-signin + bonus) as total").group("firstname ||' '|| lastname, places.client_id")
+					@logs =  Log.joins(:place).where("places.client_id = ?", @clientselected).joins(:user).where("Signin  BETWEEN :start_date AND :end_date",  {start_date: Time.parse(@mindate), end_date: Time.parse(@maxdate)}).select("firstname||' '||lastname as name, places.client_id as client_id, sum(signout - signin) as wrkhrs, sum(bonus) as additional, sum(signout-signin + bonus) as total").group("firstname ||' '|| lastname, places.client_id").order("firstname ||' '|| lastname")
 						@totalall = nil
 					@logs.each do |l1|
 						if @totalall.nil?
@@ -56,7 +56,7 @@ class ReportsController < ApplicationController
 					end
 				end
 			end
-		else
+		else #report for users/employees
 			@logs = Log.where(user: current_user).where("Signin  BETWEEN :start_date AND :end_date",  {start_date: Time.parse(@mindate), end_date: Time.parse(@maxdate)}).order("Signin DESC")
 		end
 	end
