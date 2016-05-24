@@ -92,7 +92,7 @@ class LogsController < ApplicationController
     respond_to do |format|
       cnt = Log.where(user: current_user).where("signin = signout").count
       if cnt == 0
-        if shifts_today < 2
+        if shifts_today <= 3
           if @log.save
             format.html { redirect_to signout_path, notice: 'Sign In Successfull.' }
             format.json { render :create_signout, status: :created, location: @log }
