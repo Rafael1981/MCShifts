@@ -5,14 +5,14 @@ function startTime() {
     var Y = today.format("YYYY");
     var h = today.format("HH");
     var m = today.format("mm");
-    if (m > 0  && m < 15)
+    /*if (m > 0  && m < 15)
     { m = "00";}
     else if (m > 15  && m < 30)
     { m = 15;}
     else if (m > 30  && m < 45)
     { m = 30;}
     else if (m > 45)
-    { m = 45;}
+    { m = 45;}*/
     // m = checkTime(m);
     // s = checkTime(s);
     if (document.getElementById('log_signout')) {
