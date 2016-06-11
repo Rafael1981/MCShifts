@@ -33,11 +33,11 @@
           <% if current_user.admin? %>
             <td class="col-md-1"><%= log.user.firstname+" "+log.user.lastname %></td>
           <% end %>
-          <td class="col-md-1"><%="id:"+log.id+"  "+ log.signin %></td>
+          <td class="col-md-1"><%="id:"+log.id.to_s+"  "+ log.signin.to_s %></td>
           <td class="col-md-1"><% if log.signin != log.signout %><%= log.signout %><% else %><%="Active Shift"%> <% end %> </td>
           <td class="col-md-1"><%= log.place.name %></td>
           <%  wrktime = log.signout.to_i - log.signin.to_i
-              mm, ss = wrktime.divmod(60)            
+              mm, ss = wrktime.divmod(60)
               hh, mm = mm.divmod(60)
               rr,qq = mm.divmod(15) #qq is used to calculate the rounded values
           %>
