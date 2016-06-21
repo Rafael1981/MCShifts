@@ -168,7 +168,7 @@ class LogsController < ApplicationController
 
     respond_to do |format|
       if @log.save
-        format.html { redirect_to logs_path, notice: 'Record was successfully created.' }
+        format.html { redirect_to logs_path, notice: 'Shift was successfully created.' }
         format.json { render :index, status: :created, location: @log }
         # UserMailer.log_email(@log, '1', current_user).deliver
       else
@@ -185,7 +185,7 @@ class LogsController < ApplicationController
       respond_to do |format|
         @log.place_id = params[:post][:place_id]
         if @log.update(log_params)
-          format.html { redirect_to logs_path, notice: 'Record was successfully updated.' }
+          format.html { redirect_to logs_path, notice: 'Shift was successfully updated.' }
           format.json { render :index, status: :ok, location: @log }
      #     UserMailer.log_email(@log, current_user).deliver
 
@@ -204,7 +204,7 @@ class LogsController < ApplicationController
   def destroy
     @log.destroy
     respond_to do |format|
-      format.html { redirect_to logs_url, notice: 'Log was successfully destroyed.' }
+      format.html { redirect_to logs_url, notice: 'Shift was successfully deleted.' }
       format.json { head :no_content }
     end
   end
@@ -216,7 +216,7 @@ class LogsController < ApplicationController
       if Log.find_by id: params[:id]
         @log = Log.find_by id: params[:id]
       else
-        redirect_to logs_path,notice:'Log was not found.'
+        redirect_to logs_path,notice:'Shift was not found.'
       end
 
     end

@@ -2,7 +2,7 @@ Rails.application.routes.draw do
 
   resources :places
 
-  resources :logs, only: [:edit, :update, :index, :show]
+  resources :logs, only: [:edit, :update, :index, :show, :destroy]
   resources :users, only: [:new, :create, :edit, :update, :index, :show]
   resources :clients, only: [:new, :create, :edit, :update, :index, :show]
   resource :user_sessions, only: [:new, :create, :destroy]

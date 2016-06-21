@@ -54,6 +54,8 @@
           <td class="col-md-1">
             <% if current_user.admin? %>
               <%= link_to 'Edit', edit_log_path(log), class: "btn btn-link mclink" %>
+              <%= link_to 'Remove', log, method: :delete, data: { confirm: 'Confirm removal of shift started at '+ Time.parse(log.signin.to_s).strftime('%d/%m/%Y %H:%M') +
+                  ' and finished at ' + Time.parse(log.signout.to_s).strftime('%d/%m/%Y %H:%M') + ' from employee ' + log.user.firstname+" "+log.user.lastname + '?' } %>
 
             <% else %>
 
