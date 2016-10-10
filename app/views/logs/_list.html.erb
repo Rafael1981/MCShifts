@@ -31,7 +31,7 @@
         <% wrktime = 0 %>
         <tr>
           <% if current_user.admin? %>
-            <td class="col-md-1"><%= log.user.firstname+" "+log.user.lastname %></td>
+            <td class="col-md-1"><%= log.user.firstname+" "+log.user.middlename+" "+log.user.lastname %></td>
           <% end %>
           <td class="col-md-1"><%= Time.parse(log.signin.to_s).strftime('%d/%m/%Y %H:%M') %></td>
           <td class="col-md-1"><% if log.signin != log.signout %><%= Time.parse(log.signout.to_s).strftime('%d/%m/%Y %H:%M') %><% else %><%="Active Shift"%> <% end %> </td>

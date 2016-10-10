@@ -6,7 +6,7 @@
     <div class='col-md-3'>
       <div class="form-group">
         <div class='input-group' id='user'>
-          <%= select("post", "person_id", @users.collect {|p| [ p.firstname+" "+p.lastname, p.id ] }, { include_blank: "All Employees" },{ class: "form-control", onchange: "rep_det_sum()"})%>
+          <%= select("post", "person_id", @users.collect {|p| [ p.firstname+" "+p.middlename+" "+p.lastname, p.id ] }, { include_blank: "All Employees" },{ class: "form-control", onchange: "rep_det_sum()"})%>
         </div>
       </div>
     </div>
