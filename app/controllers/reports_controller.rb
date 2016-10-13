@@ -25,7 +25,7 @@ class ReportsController < ApplicationController
 				if @typerep == "Detailed"  # report detailed, with all employees
 					@logs = Log.where("Signin  BETWEEN :start_date AND :end_date",  {start_date: Time.parse(@mindate), end_date: Time.parse(@maxdate)}).order("Signin DESC")
 				else # summarised report, all employees
-					@logs =  Log.joins(:user).where("Signin  BETWEEN :start_date AND :end_date",  {start_date: Time.parse(@mindate), end_date: Time.parse(@maxdate)}).select("firstname||' '||lastname as name, sum(signout - signin) as wrkhrs, sum(bonus) as additional, sum(signout-signin + bonus) as total").group("firstname ||' '|| lastname").order("firstname ||' '|| lastname")
+					@logs =  Log.joins(:user).where("Signin  BETWEEN :start_date AND :end_date",  {start_date: Time.parse(@mindate), end_date: Time.parse(@maxdate)}).select("firstname||' '||middlename||' '||lastname as name, sum(signout - signin) as wrkhrs, sum(bonus) as additional, sum(signout-signin + bonus) as total").group("firstname ||' '|| middlename ||' '|| lastname").order("firstname ||' '|| lastname")
 						# calculating total hours for summarised report
 						@totalall = nil
 						@logs.each do |l1|
@@ -45,7 +45,7 @@ class ReportsController < ApplicationController
 			else
 				if @clientselected.present? # summarised report for selected client
           @clientname = Client.find(@clientselected).name
-					@logs =  Log.joins(:place).where("places.client_id = ?", @clientselected).joins(:user).where("Signin  BETWEEN :start_date AND :end_date",  {start_date: Time.parse(@mindate), end_date: Time.parse(@maxdate)}).select("firstname||' '||lastname as name, places.client_id as client_id, sum(signout - signin) as wrkhrs, sum(bonus) as additional, sum(signout-signin + bonus) as total").group("firstname ||' '|| lastname, places.client_id").order("firstname ||' '|| lastname")
+					@logs =  Log.joins(:place).where("places.client_id = ?", @clientselected).joins(:user).where("Signin  BETWEEN :start_date AND :end_date",  {start_date: Time.parse(@mindate), end_date: Time.parse(@maxdate)}).select("firstname||' '||middlename||' '||lastname as name, places.client_id as client_id, sum(signout - signin) as wrkhrs, sum(bonus) as additional, sum(signout-signin + bonus) as total").group("firstname ||' '|| middlename ||' '|| lastname, places.client_id").order("firstname ||' '|| lastname")
 						@totalall = nil
 					@logs.each do |l1|
 						if @totalall.nil?
