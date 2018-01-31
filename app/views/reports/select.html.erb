@@ -37,7 +37,7 @@
     <div class='col-md-3'>
       <div class="form-group">
         <div class='input-group date' id='mindate'>
-          <%= text_field_tag 'mindate',(Time.now - 14.days + 14.hours).strftime('%d/%m/%Y'), class: "form-control"%>
+          <%= text_field_tag 'mindate',(Time.now - 13.days + 14.hours).strftime('%d/%m/%Y'), class: "form-control"%>
           <span class="input-group-addon">
             <span class="glyphicon glyphicon-calendar"></span>
           </span>
@@ -49,7 +49,7 @@
     <div class='col-md-3'>
       <div class="form-group">
         <div class='input-group date' id='maxdate'>
-          <%= text_field_tag 'maxdate',(Time.now - 1.day + 14.hours).strftime('%d/%m/%Y'), class: "form-control"%>
+          <%= text_field_tag 'maxdate',(Time.now  + 14.hours).strftime('%d/%m/%Y'), class: "form-control"%>
           <span class="input-group-addon">
             <span class="glyphicon glyphicon-calendar"></span>
           </span>
